@@ -1,0 +1,43 @@
+<Annotations Target="Z_00_T4_WS23_SRV.Orders" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <Annotation Term="com.sap.vocabularies.UI.v1.PresentationVariant">
+        <Record>
+            <PropertyValue Property="Visualizations">
+                <Collection>
+                    <AnnotationPath>@com.sap.vocabularies.UI.v1.Chart</AnnotationPath>
+                </Collection>
+            </PropertyValue>
+            <PropertyValue Property="MaxItems" Int="3" />
+            <PropertyValue Property="SortOrder">
+                <Collection>
+                    <Record>
+                        <PropertyValue Property="Property">
+                            <PropertyPath>Ordernr</PropertyPath>
+                        </PropertyValue>
+                        <PropertyValue Property="Descending">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                    <!-- Add more sorting options here if needed -->
+                </Collection>
+            </PropertyValue>
+        </Record>
+    </Annotation>
+    <Annotation Term="com.sap.vocabularies.UI.v1.Chart">
+        <Record>
+            <PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column" />
+            <PropertyValue Property="Dimensions">
+                <Collection>
+                    <PropertyPath>Werks</PropertyPath>
+                    <!-- Add more dimensions here if needed -->
+                </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Measures">
+                <Collection>
+                    <PropertyPath>EnergyConsm</PropertyPath>
+                    <PropertyPath>WaterConsm</PropertyPath>
+                    <!-- Add more measures here if needed -->
+                </Collection>
+            </PropertyValue>
+        </Record>
+    </Annotation>
+</Annotations>

@@ -1,0 +1,41 @@
+<mvc:View 
+    controllerName="z00t4ws23.controller.Detail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartchart="sap.ui.comp.smartchart">
+
+    <Page
+        title="{Name1} Plant Details"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+        <VBox class="sapUiSmallMargin">
+            <Button 
+                text="{i18n>createNewOrder}" 
+                type="Accept" 
+                press=".onOpenDialog"
+                id="CreateOrderButton" 
+                icon="sap-icon://add-equipment"
+                class="sapUiSmallMarginTop"/>
+        <List items="{orders>/results}">
+            <ObjectListItem 
+                title="{orders>Ordernr}" 
+                type="Active">
+                <attributes>
+                    <ObjectAttribute text="{orders>Werks}" />
+                    <ObjectAttribute text="Start: {orders>StartDate}" />
+                    <ObjectAttribute text="End: {orders>EndDate}" />
+                    <ObjectAttribute text="Energy Consumption: {orders>EnergyConsm}" />
+                    <ObjectAttribute text="Renewable Energy: {orders>RnwEnergyConsm}" />
+                    <ObjectAttribute text="Water Consumption: {orders>WaterConsm}" />
+                    <ObjectAttribute text="Carbon Emissions: {orders>CarbonEmssn}" />
+                </attributes>
+            </ObjectListItem>
+        </List>
+            <!-- <smartchart:SmartChart enableAutoBinding="true"
+                entitySet="orders>/results">
+		    </smartchart:SmartChart> -->
+
+        </VBox>
+
+    </Page>
+</mvc:View>

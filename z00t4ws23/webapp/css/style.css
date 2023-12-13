@@ -1,0 +1,47 @@
+/* Enter your custom styles here */
+/* Dialog Customization */
+.dialogCustom .sapMDialog {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+/* Header Customization */
+.dialogCustom .sapMDialogTitle {
+    font-weight: bold;
+}
+
+/* Input Field Customization */
+.dialogCustom .sapMInput {
+    border-radius: 4px;
+}
+
+.dialogCustom .sapMInput::placeholder {
+    color: #005687;
+}
+
+/* Date Picker Customization */
+.dialogCustom .sapMInputBaseInner {
+    border-radius: 4px;
+}
+
+/* Button Customization */
+.dialogCustom .sapMBtn {
+    border-radius: 4px;
+    margin: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+}
+
+.dialogCustom .sapMBtnAccept {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.dialogCustom .sapMBtnReject {
+    background-color: #F44336;
+    color: white;
+}
+
+/* Hover effects for buttons */
+.dialogCustom .sapMBtn:hover {
+    opacity: 0.9;
+}

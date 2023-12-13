@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="Z_00_T4_WS23_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="Materials" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Matnr" />
+                </Key>
+                <Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Weight" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Status" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EnrtyDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="OrderItems" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Orderitemnr" />
+                    <PropertyRef Name="Ordernr" />
+                </Key>
+                <Property Name="Orderitemnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Ordernr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Order Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IsRecycled" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Quantity" Type="Edm.Double" Nullable="false" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="Orders" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ordernr" />
+                    <PropertyRef Name="Werks" />
+                </Key>
+                <Property Name="Ordernr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Order Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="StartDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EndDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EnergyConsm" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="RnwEnergyConsm" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="WaterConsm" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="CarbonEmssn" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="OrderWaste" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Orderwastenr" />
+                    <PropertyRef Name="Ordernr" />
+                </Key>
+                <Property Name="Orderwastenr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Ordernr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Order Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IsSentRecyc" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Quantity" Type="Edm.Double" Nullable="false" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="SustainabilityGoals" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Goalnr" />
+                    <PropertyRef Name="Werks" />
+                </Key>
+                <Property Name="Goalnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Metric" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Description" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Value" Type="Edm.Double" Nullable="false" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="StartDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EndDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="Plants" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Werks" />
+                </Key>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Name1" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Name 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Name2" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Name 2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Stras" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Street/House" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Pfach" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="PO Box" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Pstlz" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Postal Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Ort01" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="City" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Vlfkz" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Plant cat." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Zone1" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Supply region" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityContainer Name="Z_00_T4_WS23_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="MaterialsSet" EntityType="Z_00_T4_WS23_SRV.Materials" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="OrderItemsSet" EntityType="Z_00_T4_WS23_SRV.OrderItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="OrdersSet" EntityType="Z_00_T4_WS23_SRV.Orders" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="OrderWasteSet" EntityType="Z_00_T4_WS23_SRV.OrderWaste" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="SustainabilityGoalsSet" EntityType="Z_00_T4_WS23_SRV.SustainabilityGoals" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="PlantsSet" EntityType="Z_00_T4_WS23_SRV.Plants" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+            </EntityContainer>
+
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://s72.sapucc.in.tum.de/sap/opu/odata/sap/Z_00_T4_WS23_SRV/$metadata" />
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://s72.sapucc.in.tum.de/sap/opu/odata/sap/Z_00_T4_WS23_SRV/$metadata" />
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

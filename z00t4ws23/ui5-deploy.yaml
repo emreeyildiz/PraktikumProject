@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: z00t4ws23
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: https://s72.sapucc.in.tum.de/
+          client: "300"
+        app:
+          name: Z_00_T4_WS23
+          description: ""
+          package: Z_00_T4_WS23
+          transport: S72K901975
+        exclude:
+          - /test/

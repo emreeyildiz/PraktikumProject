@@ -1,0 +1,55 @@
+<mvc:View
+controllerName="z00t4ws23.controller.PlantList"
+xmlns="sap.m"
+xmlns:mvc="sap.ui.core.mvc">
+    <List 
+        id="PlantList"
+        headerText="{i18n>PlantListTitle}"
+        class="sapUiResponsiveMargin"
+        width="auto"
+        items="{
+            path: '/PlantCCSet',
+            sorter: {
+                path: 'CCode',
+                group: true
+            }
+        }"
+        >
+        <headerToolbar>
+            <Toolbar >
+                <Title text="{i18n>PlantListTableTitle}"/>
+                <ToolbarSpacer></ToolbarSpacer>
+                <SearchField
+                    width="50%"
+                    search="onFilterPlants"
+                    liveChange="onFilterPlants"
+                    tooltip="{i18n>PlantListFilterTooltip}"
+                    placeholder="{i18n>PlantListFilterPlaceholder}"
+                />
+                <Button
+                    icon="sap-icon://filter"
+                    type="Transparent"
+                    tooltip="{i18n>PlantListFilterTooltip}"
+                    press="onOpenFilterDialog"
+                />
+            </Toolbar>
+        </headerToolbar>
+        <items>
+            <ObjectListItem
+                title="{Name1}"
+                number="{Werks}"
+                type="Navigation"
+                press="onPress"
+            >
+            <firstStatus>
+                <ObjectStatus text="{
+                    path: 'Type',
+                    formatter: '.formatter.statusText'
+                }"/>
+            </firstStatus>
+            </ObjectListItem>
+        </items>
+    </List>
+
+        
+</mvc:View>

@@ -1,0 +1,52 @@
+<mvc:View controllerName="z00t4ws23.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:columnmenu="sap.m.table.columnmenu"
+    xmlns:smartchart="sap.ui.comp.smartchart"
+    xmlns:smarttable="sap.ui.comp.smarttable">
+    <Page id="page" title="{i18n>title}">
+        <content>
+        <!-- <Text text="{Id}" class="oddCell" />
+        <Text text="{Description}" />
+        <Text text="{Name}" /> -->
+            <Table items="{/OrdersSet}" growing="true"  class="myTable" growingScrollToLoad="true" id="idMachineSetTable2">
+            <columns>
+                <Column id="_IDGenColumn1">
+                    <Text id="_IDGenText1" text="{i18n>machineId}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="columnListItem">
+                    <cells>
+                        <Text id="textId" text="{Werks}" class="oddCell" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+            <mvc:XMLView viewName="z00t4ws23.view.PlantList" />
+            <smarttable:SmartTable smartFilterId="smartFilterBar"
+                entitySet="OrdersSet"
+                enableAutoBinding="true"
+                showRowCount="true"
+                tableType="ResponsiveTable"
+                editable="false"
+            
+            >
+            <Table mode="SingleSelectMaster" id="oTable"></Table>
+            </smarttable:SmartTable>
+
+            <smartchart:SmartChart enableAutoBinding="true"
+                entitySet="OrdersSet">
+		    </smartchart:SmartChart>
+            
+
+            <!-- <smartTable:SmartTable id="smartTreeTable"
+			entitySet="OrdersSet" tableType="TreeTable" useVariantManagement="false" useTablePersonalisation="true" header="Hierarchy"
+			showRowCount="false" enableAutoBinding="true" beforeRebindTable="onBeforeRebindTable" beforeExport="onBeforeExport"
+			initiallyVisibleFields="HIERARCHY_NODE,DESCRIPTION,LEVEL,DRILLDOWN_STATE,MAGNITUDE" enableAutoColumnWidth="true">
+
+		    </smartTable:SmartTable> -->
+    </content>
+    </Page>
+</mvc:View>

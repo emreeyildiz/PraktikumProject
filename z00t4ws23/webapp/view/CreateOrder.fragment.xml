@@ -1,0 +1,32 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog
+        id="CreateOrder"
+        title="Please fill the blanks"
+        class="dialogCustom">
+        <content>
+            <Input id="orderIdInput" placeholder="Enter order ID" />
+            <Input id="werksInput" placeholder="Enter WERKS" />
+            <DatePicker id="startDatePicker" placeholder="Select start date" />
+            <DatePicker id="endDatePicker" placeholder="Select end date" />
+            <Input id="enrgConsInput" type="Number" placeholder="Enter energy consumption" />
+            <Input id="rnwEnrgConsInput" type="Number" placeholder="Enter renewable energy consumption" />
+            <Input id="waterConsInput" type="Number" placeholder="Enter water consumption" />
+            <Input id="carbonFpInput" type="Number" placeholder="Enter carbon footprint" />
+        </content>
+        <beginButton>
+            <Button
+                type="Reject"
+                text="{i18n>CancelOrder}"
+                press=".onCloseDialog"/>
+        </beginButton>
+
+        <endButton>
+            <Button
+                type="Accept"
+                text="{i18n>SubmitOrder}"
+                press=".onSubmit"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
