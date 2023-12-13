@@ -2,12 +2,15 @@
     controllerName="z00t4ws23.controller.Detail"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:smartchart="sap.ui.comp.smartchart">
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:smartchart="sap.ui.comp.smartchart"
+    xmlns:l="sap.ui.layout">
 
     <Page
         title="{Name1} Plant Details"
         showNavButton="true"
         navButtonPress=".onNavBack">
+        
         <VBox class="sapUiSmallMargin">
             <Button 
                 text="{i18n>createNewOrder}" 
@@ -35,7 +38,150 @@
                 entitySet="orders>/results">
 		    </smartchart:SmartChart> -->
 
-        </VBox>
+        <Panel headerText="Sustainability Goals">
+		<Table>
+			<columns>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Goal" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Value(s)" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Achievement" />
+				</Column>
+			</columns>
+			<items>
+                <ColumnListItem>
+					<cells>
+						<Text text="Renewable Energy Consumption" />
+						<Text text="63.5" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<mc:HarveyBallMicroChart size="Responsive" total="93" totalScale="kW" showTotal="true" showFractions="true" press="press">
+								<mc:items>
+									<mc:HarveyBallMicroChartItem fraction="63.5" color="Good" fractionScale="kW" />
+								</mc:items>
+							</mc:HarveyBallMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+				<ColumnListItem>
+					<cells>
+						<Text text="Recycled Material Utilization" />
+						<Text text="45 %" />
+						<FlexBox height="70px" width="70px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:RadialMicroChart size="Responsive" valueColor="Critical" percentage="45" press="press" />
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+                <ColumnListItem>
+					<cells>
+						<Text text="Waste Recycling" />
+						<Text text="83 %" />
+						<FlexBox height="70px" width="70px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:RadialMicroChart size="Responsive" valueColor="Good" percentage="83" press="press" />
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
 
+			</items>
+		</Table>
+	</Panel>
+    <Panel headerText="Stats">
+		<Table>
+			<columns>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Data" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Value(s)" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Graph" />
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="Water Usage" />
+						<Text text="Many" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                leftBottomLabel="June 1"
+                                rightTopLabel=""
+                                rightBottomLabel="Oct 1"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+                                <mc:lines>
+									<mc:LineMicroChartLine>
+										<mc:points>
+											<mc:LineMicroChartEmphasizedPoint x="0" y="35" color="Good" show="true"/>
+											<mc:LineMicroChartEmphasizedPoint x="8" y="53"/>
+											<mc:LineMicroChartEmphasizedPoint x="20" y="10"/>
+											<mc:LineMicroChartEmphasizedPoint x="30" y="30"/>
+											<mc:LineMicroChartEmphasizedPoint x="40" y="52"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="50" y="34"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="70" y="87"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="85" y="55"/>
+											<mc:LineMicroChartEmphasizedPoint x="100" y="73" color="Critical" show="true"/>
+										</mc:points>
+									</mc:LineMicroChartLine>
+								</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+                <ColumnListItem>
+					<cells>
+						<Text text="Carbon Emission" />
+						<Text text="Many" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                leftBottomLabel="June 1"
+                                rightTopLabel=""
+                                rightBottomLabel="Oct 1"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+                                <mc:lines>
+									<mc:LineMicroChartLine>
+										<mc:points>
+											<mc:LineMicroChartEmphasizedPoint x="0" y="87" color="Error" show="true"/>
+											<mc:LineMicroChartEmphasizedPoint x="10" y="75"/>
+											<mc:LineMicroChartEmphasizedPoint x="20" y="80"/>
+											<mc:LineMicroChartEmphasizedPoint x="30" y="79"/>
+											<mc:LineMicroChartEmphasizedPoint x="40" y="65"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="50" y="59"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="70" y="64"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="85" y="49"/>
+											<mc:LineMicroChartEmphasizedPoint x="100" y="44" color="Good" show="true"/>
+										</mc:points>
+									</mc:LineMicroChartLine>
+								</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Panel>
+    </VBox>
     </Page>
 </mvc:View>

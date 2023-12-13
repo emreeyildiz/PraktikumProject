@@ -16,6 +16,7 @@ sap.ui.define([
             this.getOwnerComponent()
                 .getRouter()
                 .getRoute("detail").attachPatternMatched(this._onRouteMatched, this);
+            
         },
 
         _onObjectMatched: function (oEvent) {
