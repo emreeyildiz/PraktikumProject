@@ -2,13 +2,191 @@
     controllerName="z00t4ws23.controller.Detail"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:smartchart="sap.ui.comp.smartchart">
+    xmlns:smartchart="sap.ui.comp.smartchart"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:l="sap.ui.layout"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
 
     <Page
-        title="{Name1} Plant Details"
+        title="Plants List"
         showNavButton="true"
         navButtonPress=".onNavBack">
         <VBox class="sapUiSmallMargin">
+        <HBox class = "myHBox"> 
+            <Text class="plantTitle" text="{Name1}" />
+            <VBox >
+                <HBox > 
+                    <ObjectAttribute class="myAdress" text="{Name2}" />
+                    <ObjectAttribute class="myAdress" text="{Stras}" />
+                    <ObjectAttribute class="myAdress" text="{Pfach}" />
+                </HBox>
+                <HBox >
+                    <ObjectAttribute class="myAdress" text="{Pstlz}" />
+                    <ObjectAttribute class="myAdress" text="{Ort01}" />
+                    <ObjectAttribute class="myAdress" text="{Vlfkz}" />
+                    <ObjectAttribute class="myAdress" text="{Zone1}" />
+                </HBox>
+            </VBox>
+        </HBox>
+
+            <Toolbar width="100%" height="10px"/>
+        <Panel headerText="Sustainability Goals">
+		<Table>
+			<columns>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Goal" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Value(s)" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Achievement" />
+				</Column>
+			</columns>
+			<items>
+                <ColumnListItem>
+					<cells>
+						<Text text="Renewable Energy Consumption" />
+						<Text text="63.5" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<mc:HarveyBallMicroChart size="Responsive" total="93" totalScale="kW" showTotal="true" showFractions="true" press="press">
+								<mc:items>
+									<mc:HarveyBallMicroChartItem fraction="63.5" color="Good" fractionScale="kW" />
+								</mc:items>
+							</mc:HarveyBallMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+				<ColumnListItem>
+					<cells>
+						<Text text="Recycled Material Utilization" />
+						<Text text="45 %" />
+						<FlexBox height="70px" width="70px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:RadialMicroChart size="Responsive" valueColor="Critical" percentage="45" press="press" />
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+                <ColumnListItem>
+					<cells>
+						<Text text="Waste Recycling" />
+						<Text text="83 %" />
+						<FlexBox height="70px" width="70px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:RadialMicroChart size="Responsive" valueColor="Good" percentage="83" press="press" />
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+
+			</items>
+		</Table>
+	</Panel>
+    <Panel headerText="Stats">
+		<Table>
+			<columns>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Data" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Value(s)" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Graph" />
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="Water Usage" />
+						<Text text="Many" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                leftBottomLabel="June 1"
+                                rightTopLabel=""
+                                rightBottomLabel="Oct 1"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+                                <mc:lines>
+									<mc:LineMicroChartLine>
+										<mc:points>
+											<mc:LineMicroChartEmphasizedPoint x="0" y="35" color="Good" show="true"/>
+											<mc:LineMicroChartEmphasizedPoint x="8" y="53"/>
+											<mc:LineMicroChartEmphasizedPoint x="20" y="10"/>
+											<mc:LineMicroChartEmphasizedPoint x="30" y="30"/>
+											<mc:LineMicroChartEmphasizedPoint x="40" y="52"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="50" y="34"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="70" y="87"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="85" y="55"/>
+											<mc:LineMicroChartEmphasizedPoint x="100" y="73" color="Critical" show="true"/>
+										</mc:points>
+									</mc:LineMicroChartLine>
+								</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+                <ColumnListItem>
+					<cells>
+						<Text text="Carbon Emission" />
+						<Text text="Many" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                leftBottomLabel="June 1"
+                                rightTopLabel=""
+                                rightBottomLabel="Oct 1"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+                                <mc:lines>
+									<mc:LineMicroChartLine>
+										<mc:points>
+											<mc:LineMicroChartEmphasizedPoint x="0" y="87" color="Error" show="true"/>
+											<mc:LineMicroChartEmphasizedPoint x="10" y="75"/>
+											<mc:LineMicroChartEmphasizedPoint x="20" y="80"/>
+											<mc:LineMicroChartEmphasizedPoint x="30" y="79"/>
+											<mc:LineMicroChartEmphasizedPoint x="40" y="65"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="50" y="59"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="70" y="64"/>
+                                            <mc:LineMicroChartEmphasizedPoint x="85" y="49"/>
+											<mc:LineMicroChartEmphasizedPoint x="100" y="44" color="Good" show="true"/>
+										</mc:points>
+									</mc:LineMicroChartLine>
+								</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Panel>
+        <smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="OrdersSet" persistencyKey="SmartFilter_Explored" basicSearchFieldName="Bukrs" enableBasicSearch="true" >
+            <smartFilterBar:controlConfiguration>
+                <smartFilterBar:ControlConfiguration key="{Werks}">
+                    <smartFilterBar:defaultFilterValues>
+                            <smartFilterBar:SelectOption low="{Werks}">
+                            </smartFilterBar:SelectOption>
+                        </smartFilterBar:defaultFilterValues>
+                    </smartFilterBar:ControlConfiguration>
+            </smartFilterBar:controlConfiguration>
+        </smartFilterBar:SmartFilterBar>
+        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+            <!-- layout data used to make the table growing but the filter bar fixed -->
             <Button 
                 text="{i18n>createNewOrder}" 
                 type="Accept" 
@@ -16,7 +194,29 @@
                 id="CreateOrderButton" 
                 icon="sap-icon://add-equipment"
                 class="sapUiSmallMarginTop"/>
-        <List items="{orders>/results}">
+    
+        </smartTable:SmartTable>
+            <!-- <smartchart:SmartChart enableAutoBinding="true"
+                entitySet="orders>/results">
+		    </smartchart:SmartChart> -->
+            <smartchart:SmartChart id ="smartChartGeneral" enableAutoBinding="true"
+            headerLevel="Auto"
+            beforeRebindChart="onBeforeRebindTable"
+			entitySet="OrdersSet" useVariantManagement="true"
+			persistencyKey="PKeyChartExample9" useChartPersonalisation="true"
+			header="All Metrics" showFullScreenButton="true" selectionMode="Multi"
+			showChartTooltip="true" showDrillBreadcrumbs="false"
+			showDetailsButton="false" showDrillButtons="true"
+			uiStateChange="onUiStateChange">
+			<smartchart:toolbar>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+					<OverflowToolbarButton icon="sap-icon://activate" tooltip="Sort by name in ascending order via UI state" press="applyUIState" type="Transparent"/>
+				</OverflowToolbar>
+			</smartchart:toolbar>
+		</smartchart:SmartChart>
+
+        <!-- <List items="{orders>/results}">
             <ObjectListItem 
                 title="{orders>Ordernr}" 
                 type="Active">
@@ -30,10 +230,8 @@
                     <ObjectAttribute text="Carbon Emissions: {orders>CarbonEmssn}" />
                 </attributes>
             </ObjectListItem>
-        </List>
-            <!-- <smartchart:SmartChart enableAutoBinding="true"
-                entitySet="orders>/results">
-		    </smartchart:SmartChart> -->
+        </List> -->
+
 
         </VBox>
 

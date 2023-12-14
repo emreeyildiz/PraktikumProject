@@ -33,7 +33,7 @@
                 <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="StartDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="EndDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
-                <Property Name="EnergyConsm" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EnergyConsm" Type="Edm.Double" sap:unicode="false" sap:label="Energy Consumption" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="RnwEnergyConsm" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="WaterConsm" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="CarbonEmssn" Type="Edm.Double" sap:unicode="false" sap:label="Field of type FLTP" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />

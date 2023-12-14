@@ -7,7 +7,7 @@
         class="dialogCustom">
         <content>
             <Input id="orderIdInput" placeholder="Enter order ID" />
-            <Input id="werksInput" placeholder="Enter WERKS" />
+            <Input id="werksInput" placeholder="Enter WERKS"/>
             <DatePicker id="startDatePicker" placeholder="Select start date" />
             <DatePicker id="endDatePicker" placeholder="Select end date" />
             <Input id="enrgConsInput" type="Number" placeholder="Enter energy consumption" />

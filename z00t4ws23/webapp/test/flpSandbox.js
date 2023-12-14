@@ -39,7 +39,7 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "Sustainibility Managment System",
+									"title": "Sustainability Managment System",
 									"targetURL": "#z00t4ws23-display"
 								}
 							}]
@@ -54,8 +54,8 @@ sap.ui.define([
 							"z00t4ws23-display": {
 								"semanticObject": "z00t4ws23",
 								"action": "display",
-								"description": "Sustainibility Managment System",
-								"title": "Sustainibility Managment System",
+								"description": "Sustainability Managment System",
+								"title": "Sustainability Managment System",
 								"signature": {
 									"parameters": {}
 								},

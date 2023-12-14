@@ -1,33 +1,14 @@
 <Annotations Target="Z_00_T4_WS23_SRV.Orders" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-    <Annotation Term="com.sap.vocabularies.UI.v1.PresentationVariant">
-        <Record>
-            <PropertyValue Property="Visualizations">
-                <Collection>
-                    <AnnotationPath>@com.sap.vocabularies.UI.v1.Chart</AnnotationPath>
-                </Collection>
-            </PropertyValue>
-            <PropertyValue Property="MaxItems" Int="3" />
-            <PropertyValue Property="SortOrder">
-                <Collection>
-                    <Record>
-                        <PropertyValue Property="Property">
-                            <PropertyPath>Ordernr</PropertyPath>
-                        </PropertyValue>
-                        <PropertyValue Property="Descending">
-                            <Bool>true</Bool>
-                        </PropertyValue>
-                    </Record>
-                    <!-- Add more sorting options here if needed -->
-                </Collection>
-            </PropertyValue>
-        </Record>
-    </Annotation>
     <Annotation Term="com.sap.vocabularies.UI.v1.Chart">
         <Record>
             <PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column" />
             <PropertyValue Property="Dimensions">
                 <Collection>
                     <PropertyPath>Werks</PropertyPath>
+
+                    <PropertyPath>StartDate</PropertyPath>
+                    <PropertyPath>EndDate</PropertyPath>
+
                     <!-- Add more dimensions here if needed -->
                 </Collection>
             </PropertyValue>
@@ -35,9 +16,33 @@
                 <Collection>
                     <PropertyPath>EnergyConsm</PropertyPath>
                     <PropertyPath>WaterConsm</PropertyPath>
+                    <PropertyPath>CarbonEmssn</PropertyPath> 
+                    <PropertyPath>RnwEnergyConsm</PropertyPath> 
+
                     <!-- Add more measures here if needed -->
                 </Collection>
             </PropertyValue>
         </Record>
+    </Annotation>
+        <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+        <Collection>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Ordernr"/>
+                <Annotation Term="com.sap.vocabularies.UI.v1.Importance" EnumMember="com.sap.vocabularies.UI.v1.ImportanceType/High"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Werks"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="StartDate"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="EndDate"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="EnergyConsm"/>
+            </Record>
+            <!-- Add more DataField records as needed for other properties -->
+        </Collection>
     </Annotation>
 </Annotations>

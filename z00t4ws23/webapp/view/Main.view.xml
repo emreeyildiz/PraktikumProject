@@ -9,7 +9,7 @@
         <!-- <Text text="{Id}" class="oddCell" />
         <Text text="{Description}" />
         <Text text="{Name}" /> -->
-            <Table items="{/OrdersSet}" growing="true"  class="myTable" growingScrollToLoad="true" id="idMachineSetTable2">
+            <!-- <Table items="{/OrdersSet}" growing="true"  class="myTable" growingScrollToLoad="true" id="idMachineSetTable2">
             <columns>
                 <Column id="_IDGenColumn1">
                     <Text id="_IDGenText1" text="{i18n>machineId}" />
@@ -23,22 +23,21 @@
                 </ColumnListItem>
             </items>
 
-        </Table>
+        </Table> -->
             <mvc:XMLView viewName="z00t4ws23.view.PlantList" />
-            <smarttable:SmartTable smartFilterId="smartFilterBar"
+            <smartchart:SmartChart enableAutoBinding="true"
+                header="General View"
+                entitySet="OrdersSet">
+		    </smartchart:SmartChart>
+            <smarttable:SmartTable
+                header="Orders"
                 entitySet="OrdersSet"
                 enableAutoBinding="true"
                 showRowCount="true"
                 tableType="ResponsiveTable"
                 editable="false"
-            
             >
-            <Table mode="SingleSelectMaster" id="oTable"></Table>
             </smarttable:SmartTable>
-
-            <smartchart:SmartChart enableAutoBinding="true"
-                entitySet="OrdersSet">
-		    </smartchart:SmartChart>
             
 
             <!-- <smartTable:SmartTable id="smartTreeTable"

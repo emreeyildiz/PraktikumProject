@@ -16,6 +16,10 @@ sap.ui.define([
             this.getOwnerComponent()
                 .getRouter()
                 .getRoute("detail").attachPatternMatched(this._onRouteMatched, this);
+            var oViewModel = new sap.ui.model.json.JSONModel({
+                currentPlant: ""
+            });
+            this.getView().setModel(oViewModel, "viewModel");
         },
 
         _onObjectMatched: function (oEvent) {
@@ -25,11 +29,27 @@ sap.ui.define([
                 model: "plant"
             });
         },
+        onBeforeRebindTable: function (oEvent) {
+            var oViewModel = this.getView().getModel("viewModel");
+            var sPlantPath = oViewModel.getProperty("/currentPlant");
 
+            if (sPlantPath) {
+                var oFilter = new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, sPlantPath);
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                oBindingParams.filters.push(oFilter);
+            }
+        },
         _onRouteMatched: function (oEvent) {
             let sPlantPath = oEvent.getParameter("arguments").plantPath
             console.log(this.getOwnerComponent().getModel().oData)
             let data = this.getOwnerComponent().getModel().oData;
+            var oViewModel = this.getView().getModel("viewModel");
+
+            if (oViewModel) {
+                oViewModel.setProperty("/currentPlant", sPlantPath);
+            } else {
+                console.error("ViewModel not found");
+            }
             // let Iindex = data.
             this.getView().bindElement("/PlantsSet" + "('" + sPlantPath + "')");
             // this.getView().bindElement("/PlantsSet" + "('" + sPlantPath + "')");

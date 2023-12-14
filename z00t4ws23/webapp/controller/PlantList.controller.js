@@ -8,6 +8,7 @@ sap.ui.define([
     'use strict'
     return Controller.extend("z00t4ws23.controller.PlantList", {
         formatter: formatter,
+
         onInit: function () {
             var oViewModel = new JSONModel({
                 currency: "EUR"
@@ -16,6 +17,7 @@ sap.ui.define([
         },
 
         onFilterPlants: function (oEvent) {
+
             // build filter array
             var aFilter = [];
             console.log(oEvent)
@@ -37,7 +39,9 @@ sap.ui.define([
         },
 
         onPress: function (oEvent) {
+
             var oItem = oEvent.getSource();
+
             console.log("oItem", oItem);
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             console.log("oItem1:", oItem.getProperty("number").substr(1));
@@ -47,6 +51,9 @@ sap.ui.define([
                     plantPath: window.encodeURIComponent(oItem.getProperty("number"))
                 }
             );
+            console.log("refesh time")
+            location.reload();
+
         }
     });
 });
