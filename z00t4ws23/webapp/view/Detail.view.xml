@@ -6,12 +6,16 @@
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:mc="sap.suite.ui.microchart"
     xmlns:l="sap.ui.layout"
-    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+	xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	>
 
     <Page
         title="Plants List"
         showNavButton="true"
         navButtonPress=".onNavBack">
+		
         <VBox class="sapUiSmallMargin">
         <HBox class = "myHBox"> 
             <Text class="plantTitle" text="{Name1}" />
@@ -29,6 +33,8 @@
                 </HBox>
             </VBox>
         </HBox>
+	
+		
 
             <Toolbar width="100%" height="10px"/>
         <Panel headerText="Sustainability Goals">
@@ -85,6 +91,50 @@
 
 			</items>
 		</Table>
+		<Table id="goalsTable" items="{goals>/results}">
+    <headerToolbar>
+        <Toolbar>
+            <Title text="Sustainability Goals" />
+        </Toolbar>
+    </headerToolbar>
+    <columns>
+        <Column>
+            <Text text="Goal Number" />
+        </Column>
+        <Column>
+            <Text text="Plant" />
+        </Column>
+        <Column>
+            <Text text="Metric" />
+        </Column>
+        <Column>
+            <Text text="Description" />
+        </Column>
+        <Column>
+            <Text text="Value" />
+        </Column>
+        <Column>
+            <Text text="Start Date" />
+        </Column>
+        <Column>
+            <Text text="End Date" />
+        </Column>
+    </columns>
+    <items>
+        <ColumnListItem>
+            <cells>
+                <ObjectIdentifier title="{goals>Goalnr}" />
+                <Text text="{goals>Werks}" />
+                <Text text="{goals>Metric}" />
+                <Text text="{goals>Description}" />
+                <Text text="{goals>Value}" />
+                <Text text="{goals>StartDate}" />
+                <Text text="{goals>EndDate}" />
+            </cells>
+        </ColumnListItem>
+    </items>
+</Table>
+
 	</Panel>
     <Panel headerText="Stats">
 		<Table>
@@ -185,16 +235,34 @@
                     </smartFilterBar:ControlConfiguration>
             </smartFilterBar:controlConfiguration>
         </smartFilterBar:SmartFilterBar>
-        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
             <!-- layout data used to make the table growing but the filter bar fixed -->
             <Button 
                 text="{i18n>createNewOrder}" 
                 type="Accept" 
                 press=".onOpenDialog"
-                id="CreateOrderButton" 
+                id="CreateOrderButton"
+				app:Werks="{Werks}" 
                 icon="sap-icon://add-equipment"
                 class="sapUiSmallMarginTop"/>
-    
+				<!-- dont forget requestAtleastField -->
+			<!-- <Table sticky="ColumnHeaders,HeaderToolbar">
+				<columns>
+					<Column>
+						<Label text="Product ID-Name"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+						<ObjectIdentifier text="{
+							parts: ['StartDate', 'EndDate'],
+							formatter: 'formatter.formatDateRange'
+						}" />
+					</cells>
+					</ColumnListItem>
+				</items>
+   			</Table> -->
         </smartTable:SmartTable>
             <!-- <smartchart:SmartChart enableAutoBinding="true"
                 entitySet="orders>/results">
@@ -205,8 +273,8 @@
 			entitySet="OrdersSet" useVariantManagement="true"
 			persistencyKey="PKeyChartExample9" useChartPersonalisation="true"
 			header="All Metrics" showFullScreenButton="true" selectionMode="Multi"
-			showChartTooltip="true" showDrillBreadcrumbs="false"
-			showDetailsButton="false" showDrillButtons="true"
+			showChartTooltip="true" showDrillBreadcrumbs="true"
+			showDetailsButton="true" showDrillButtons="true"
 			uiStateChange="onUiStateChange">
 			<smartchart:toolbar>
 				<OverflowToolbar>
@@ -216,24 +284,9 @@
 			</smartchart:toolbar>
 		</smartchart:SmartChart>
 
-        <!-- <List items="{orders>/results}">
-            <ObjectListItem 
-                title="{orders>Ordernr}" 
-                type="Active">
-                <attributes>
-                    <ObjectAttribute text="{orders>Werks}" />
-                    <ObjectAttribute text="Start: {orders>StartDate}" />
-                    <ObjectAttribute text="End: {orders>EndDate}" />
-                    <ObjectAttribute text="Energy Consumption: {orders>EnergyConsm}" />
-                    <ObjectAttribute text="Renewable Energy: {orders>RnwEnergyConsm}" />
-                    <ObjectAttribute text="Water Consumption: {orders>WaterConsm}" />
-                    <ObjectAttribute text="Carbon Emissions: {orders>CarbonEmssn}" />
-                </attributes>
-            </ObjectListItem>
-        </List> -->
-
-
         </VBox>
-
+            <core:HTML afterRendering="onAfterRendering" content="
+                &lt;canvas id='externalChart' width='400' height='400'&gt;&lt;/canvas&gt;
+            "></core:HTML>
     </Page>
 </mvc:View>

@@ -28,14 +28,14 @@ sap.ui.define([
                         console.log("onCloseDialog");
                         oView.byId("CreateOrder").close();
                     },
-                    onSubmit: function () {
+                    onSubmit: function (oControlEvent) {
                         console.log("onSubmit");
                         var oModel = oView.getModel();
                         oView.byId("CreateOrder").close();
                         var dateFormat = DateFormat.getDateInstance({ pattern: "yyyyMMdd" });
 
                         var orderId = oView.byId("orderIdInput").getValue();
-                        var werks = oView.byId("werksInput").getValue();
+                        var werks = oControlEvent.getSource().data("Werks");
                         var startDate = oView.byId("startDatePicker").getDateValue();
                         var endDate = oView.byId("endDatePicker").getDateValue();
                         var enrgCons = oView.byId("enrgConsInput").getValue();
@@ -55,16 +55,17 @@ sap.ui.define([
                             CarbonEmssn: parseFloat(carbonFp)
                         };
                         console.log("Order Data ----- ", orderData);
-                        oModel.create("/OrdersSet", orderData, {
-                            success: function () {
-                                // MessageToast.show("Order created successfully");
-                                console.log("Success")
-                            },
-                            error: function (oError) {
-                                // MessageToast.show("Error creating order");
-                                console.log("Fail")
-                            }
-                        });
+
+                        // oModel.create("/OrdersSet", orderData, {
+                        //     success: function () {
+                        //         // MessageToast.show("Order created successfully");
+                        //         console.log("Success")
+                        //     },
+                        //     error: function (oError) {
+                        //         // MessageToast.show("Error creating order");
+                        //         console.log("Fail")
+                        //     }
+                        // });
 
 
 

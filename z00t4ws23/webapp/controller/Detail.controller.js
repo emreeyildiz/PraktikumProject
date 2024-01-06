@@ -6,12 +6,10 @@ sap.ui.define([
     "sap/ui/comp/smartchart/SmartChart",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/format/NumberFormat",
-
-], function (Controller, UIComponent, History, SmartChart, DateFormat) {
+], function (Controller, UIComponent, History, SmartChart, DateFormat, NumberFormat) {
     'use strict'
 
     return Controller.extend("z00t4ws23.controller.Detail", {
-
         onInit: function () {
             this.getOwnerComponent()
                 .getRouter()
@@ -21,7 +19,6 @@ sap.ui.define([
             });
             this.getView().setModel(oViewModel, "viewModel");
         },
-
         _onObjectMatched: function (oEvent) {
             console.log(oEvent);
             this.getView().bindElement({
@@ -69,7 +66,20 @@ sap.ui.define([
                     console.error("Error fetching orders:", oError);
                 }
             });
-            this.getView().setModel(oJsonModel, "orders");
+
+            oModel.read("/SustainabilityGoalsSet", {
+                filters: [oFilter],
+                success: function (oData, response) {
+                    // Success handling
+                    console.log("Goals fetched:", oData);
+                    oJsonModel.setData(oData);
+                },
+                error: function (oError) {
+                    // Error handling
+                    console.error("Error fetching goals:", oError);
+                }
+            });
+            this.getView().setModel(oJsonModel, "goals");
         },
         onOpenDialog: function () {
             this.getOwnerComponent().openCreateOrder();
@@ -86,32 +96,6 @@ sap.ui.define([
                 oRouter.navTo("RouteMain", {}, true);
             }
         },
-
-        createOrder: function () {
-            var oModel = this.getView().getModel();
-            var dateFormat = DateFormat.getDateInstance({ pattern: "YYYYMMDD" });
-            var startDate = this.getView().byId("startDatePicker").getDateValue();
-            var endDate = this.getView().byId("endDatePicker").getDateValue();
-            var oData = {
-                OrderId: this.getView().byId("orderIdInput").getValue(),
-                Werks: this.getView().byId("werksInput").getValue(),
-                StartDate: startDate ? dateFormat.format(startDate) : "",
-                EndDate: endDate ? dateFormat.format(endDate) : "",
-                EnrgCons: parseFloat(this.getView().byId("enrgConsInput").getValue()),
-                RnwEnrgCons: parseFloat(this.getView().byId("rnwEnrgConsInput").getValue()),
-                WaterCons: parseFloat(this.getView().byId("waterConsInput").getValue()),
-                CarbonFp: parseFloat(this.getView().byId("carbonFpInput").getValue())
-            };
-            console.log("Order Data ----- ", orderData);
-            oModel.create("/OrderSet", oData, {
-                success: function () {
-                    MessageToast.show("Order created successfully");
-                },
-                error: function (oError) {
-                    MessageToast.show("Error creating order");
-                }
-            });
-        }
 
     });
 });

@@ -1,18 +1,16 @@
 sap.ui.define([], function () {
-    'use strict'
+    "use strict";
+
     return {
-        statusText: function (sStatus) {
-            var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
-            switch (sStatus) {
-                case "A":
-                    return resourceBundle.getText("PlantStatusA");
-                case "B":
-                    return resourceBundle.getText("PlantStatusB");
-                case "C":
-                    return resourceBundle.getText("PlantStatusC");
-                default:
-                    return sStatus;
-            }
+        formatDateRange: function (sStartDate, sEndDate) {
+            var formatDateString = function (sDate) {
+                if (sDate && sDate.length === 8) {
+                    return sDate.slice(0, 2) + "." + sDate.slice(2, 4) + "." + sDate.slice(4);
+                }
+                return sDate;
+            };
+
+            return formatDateString(sStartDate) + " -- " + formatDateString(sEndDate);
         }
-    }
-})
+    };
+});
