@@ -38,6 +38,7 @@
 
             <Toolbar width="100%" height="10px"/>
         <Panel headerText="Sustainability Goals">
+		<Text text="{results>ordernr}"></Text>
 		<Table>
 			<columns>
 				<Column demandPopin="true" minScreenWidth="Tablet">
@@ -91,10 +92,10 @@
 
 			</items>
 		</Table>
-		<Table id="goalsTable" items="{goals>/results}">
+		<Table id="goalsTable" items="{orders>/results}">
     <headerToolbar>
         <Toolbar>
-            <Title text="Sustainability Goals" />
+            <Title text="Sustainability orders" />
 							<Button 
 				text="{i18n>createNewGoal}" 
 				type="Accept" 
@@ -109,19 +110,10 @@
 
     <columns>
         <Column>
-            <Text text="Goal Number" />
+            <Text text="Order Number" />
         </Column>
-        <Column>
-            <Text text="Plant" />
-        </Column>
-        <Column>
-            <Text text="Metric" />
-        </Column>
-        <Column>
-            <Text text="Description" />
-        </Column>
-        <Column>
-            <Text text="Value" />
+		<Column>
+            <Text text="EnergyConsm" />
         </Column>
         <Column>
             <Text text="Start Date" />
@@ -133,13 +125,10 @@
     <items>
         <ColumnListItem>
             <cells>
-                <ObjectIdentifier title="{goals>Goalnr}" />
-                <Text text="{goals>Werks}" />
-                <Text text="{goals>Metric}" />
-                <Text text="{goals>Description}" />
-                <Text text="{goals>Value}" />
-                <Text text="{goals>StartDate}" />
-                <Text text="{goals>EndDate}" />
+                <ObjectIdentifier title="{orders>Ordernr}" />
+                <Text text="{orders>EnergyConsm}" />
+                <Text text="{path: 'orders>StartDate', formatter: '.formatDate' }" />
+                <Text text="{path: 'orders>EndDate', formatter: '.formatDate' }" />
             </cells>
         </ColumnListItem>
     </items>
@@ -172,26 +161,26 @@
                                 showPoints="true"
                                 size="Responsive"
                                 leftTopLabel=""
-                                leftBottomLabel="June 1"
                                 rightTopLabel=""
-                                rightBottomLabel="Oct 1"
+    							leftBottomLabel="{path: 'chartModel>/FirstDate', formatter: '.formatDate'}"
+    							rightBottomLabel="{path: 'chartModel>/LastDate', formatter: '.formatDate'}"
+								id="LineMicroChart"
                                 press="press"
                                 class="sapUiTinyMarginTop">
-                                <mc:lines>
-									<mc:LineMicroChartLine>
-										<mc:points>
-											<mc:LineMicroChartEmphasizedPoint x="0" y="35" color="Good" show="true"/>
-											<mc:LineMicroChartEmphasizedPoint x="8" y="53"/>
-											<mc:LineMicroChartEmphasizedPoint x="20" y="10"/>
-											<mc:LineMicroChartEmphasizedPoint x="30" y="30"/>
-											<mc:LineMicroChartEmphasizedPoint x="40" y="52"/>
-                                            <mc:LineMicroChartEmphasizedPoint x="50" y="34"/>
-                                            <mc:LineMicroChartEmphasizedPoint x="70" y="87"/>
-                                            <mc:LineMicroChartEmphasizedPoint x="85" y="55"/>
-											<mc:LineMicroChartEmphasizedPoint x="100" y="73" color="Critical" show="true"/>
-										</mc:points>
-									</mc:LineMicroChartLine>
-								</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" show="true" color="{chartModel>color}"/>
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/thresholdWaterLine}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" color="Critical" />
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
                         </mc:LineMicroChart>
 						</FlexBox>
 					</cells>
@@ -208,26 +197,26 @@
                                 showPoints="true"
                                 size="Responsive"
                                 leftTopLabel=""
-                                leftBottomLabel="June 1"
                                 rightTopLabel=""
-                                rightBottomLabel="Oct 1"
+    							leftBottomLabel="{path: 'chartModel>/FirstDate', formatter: '.formatDate'}"
+    							rightBottomLabel="{path: 'chartModel>/LastDate', formatter: '.formatDate'}"
+								id="LineMicroChart2"
                                 press="press"
                                 class="sapUiTinyMarginTop">
-                                <mc:lines>
-									<mc:LineMicroChartLine>
-										<mc:points>
-											<mc:LineMicroChartEmphasizedPoint x="0" y="87" color="Error" show="true"/>
-											<mc:LineMicroChartEmphasizedPoint x="10" y="75"/>
-											<mc:LineMicroChartEmphasizedPoint x="20" y="80"/>
-											<mc:LineMicroChartEmphasizedPoint x="30" y="79"/>
-											<mc:LineMicroChartEmphasizedPoint x="40" y="65"/>
-                                            <mc:LineMicroChartEmphasizedPoint x="50" y="59"/>
-                                            <mc:LineMicroChartEmphasizedPoint x="70" y="64"/>
-                                            <mc:LineMicroChartEmphasizedPoint x="85" y="49"/>
-											<mc:LineMicroChartEmphasizedPoint x="100" y="44" color="Good" show="true"/>
-										</mc:points>
-									</mc:LineMicroChartLine>
-								</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y1}" show="true" color="{chartModel>color}"/>
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/thresholdWaterLine}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" color="Critical" />
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
                         </mc:LineMicroChart>
 						</FlexBox>
 					</cells>

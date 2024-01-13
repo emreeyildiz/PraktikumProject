@@ -126,7 +126,43 @@ sap.ui.define([
             });
             oDialog.open();
         },
+        formatDate: function (sDate) {
+            if (!sDate) return "";
+            var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "MMM dd, yyyy" });
+            return oDateFormat.format(new Date(sDate));
+        },
+        mapOrdersToChartPoints: function (oData) {
+            var aChartPoints = [];
+            var firstDate, lastDate;
+            var thresholdWater = 11;
+            var thresholdWaterLine = [
+                { x: 0, y: thresholdWater },
+                { x: oData.results.length - 1, y: thresholdWater } // Assuming x=100 is your max value
+            ];
+            if (oData.results.length > 0) {
+                // Assuming the orders are already sorted by date
+                firstDate = oData.results[0].EndDate;
+                lastDate = oData.results[oData.results.length - 1].EndDate;
+                aChartPoints = oData.results.map(function (order, index) {
+                    var color = parseFloat(order.WaterConsm) > thresholdWater ? "Error" : "Good"; // Set color based on thresholdWater
+                    return {
+                        x: index, // Transform this as needed
+                        y: parseFloat(order.WaterConsm),
+                        y1: parseFloat(order.CarbonEmssn),
+                        color: color,
+                    };
+                });
+            }
 
+            var oChartModel = new sap.ui.model.json.JSONModel({
+                ChartData: aChartPoints,
+                FirstDate: firstDate,
+                LastDate: lastDate,
+                ThresholdWaterLine: thresholdWaterLine,
+            });
+            console.log(aChartPoints);
+            this.getView().setModel(oChartModel, "chartModel");
+        },
 
 
         _onRouteMatched: function (oEvent) {
@@ -146,6 +182,8 @@ sap.ui.define([
 
             var oModel = this.getView().getModel(); // Get the OData model
             var oJsonModel = new sap.ui.model.json.JSONModel();
+            var oJsonModel2 = new sap.ui.model.json.JSONModel();
+            var that = this;
             var oFilter = new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, sPlantPath);
             oModel.read("/OrdersSet", {
                 filters: [oFilter],
@@ -153,6 +191,7 @@ sap.ui.define([
                     // Success handling
                     console.log("Orders fetched:", oData);
                     oJsonModel.setData(oData);
+                    that.mapOrdersToChartPoints(oData);
                 },
                 error: function (oError) {
                     // Error handling
@@ -165,14 +204,17 @@ sap.ui.define([
                 success: function (oData, response) {
                     // Success handling
                     console.log("Goals fetched:", oData);
-                    oJsonModel.setData(oData);
+                    oJsonModel2.setData(oData);
                 },
                 error: function (oError) {
                     // Error handling
                     console.error("Error fetching goals:", oError);
                 }
             });
-            this.getView().setModel(oJsonModel, "goals");
+            this.getView().setModel(oJsonModel, "orders");
+            this.getView().setModel(oJsonModel2, "goals");
+            // this.mapOrdersToChartPoints(oJsonModel);
+
         },
         onOpenDialog: function () {
             this.getOwnerComponent().openCreateOrder();
