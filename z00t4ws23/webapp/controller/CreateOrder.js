@@ -32,10 +32,10 @@ sap.ui.define([
                         console.log("onSubmit");
                         var oModel = oView.getModel();
                         oView.byId("CreateOrder").close();
-                        var dateFormat = DateFormat.getDateInstance({ pattern: "yyyyMMdd" });
+                        var dateFormat = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd'T'HH:mm" });
 
                         var orderId = oView.byId("orderIdInput").getValue();
-                        var werks = oControlEvent.getSource().data("Werks");
+                        var werks = oView.byId("werksInput").getValue();
                         var startDate = oView.byId("startDatePicker").getDateValue();
                         var endDate = oView.byId("endDatePicker").getDateValue();
                         var enrgCons = oView.byId("enrgConsInput").getValue();
@@ -56,16 +56,16 @@ sap.ui.define([
                         };
                         console.log("Order Data ----- ", orderData);
 
-                        // oModel.create("/OrdersSet", orderData, {
-                        //     success: function () {
-                        //         // MessageToast.show("Order created successfully");
-                        //         console.log("Success")
-                        //     },
-                        //     error: function (oError) {
-                        //         // MessageToast.show("Error creating order");
-                        //         console.log("Fail")
-                        //     }
-                        // });
+                        oModel.create("/OrdersSet", orderData, {
+                            success: function () {
+                                // MessageToast.show("Order created successfully");
+                                console.log("Success")
+                            },
+                            error: function (oError) {
+                                // MessageToast.show("Error creating order");
+                                console.log("Fail")
+                            }
+                        });
 
 
 

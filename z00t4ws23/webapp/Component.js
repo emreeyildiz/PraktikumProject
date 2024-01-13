@@ -2,7 +2,7 @@
  * eslint-disable @sap/ui5-jsdocs/no-jsdoc
  */
 
-sap.ui.define([
+([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "z00t4ws23/model/models",

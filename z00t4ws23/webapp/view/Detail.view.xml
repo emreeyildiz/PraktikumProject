@@ -95,8 +95,18 @@
     <headerToolbar>
         <Toolbar>
             <Title text="Sustainability Goals" />
+							<Button 
+				text="{i18n>createNewGoal}" 
+				type="Accept" 
+				press="createNewGoal"
+				id="createNewGoal"
+				app:Werks="{Werks}" 
+				icon="sap-icon://add-equipment"
+				class="sapUiSmallMarginTop"/>
         </Toolbar>
+
     </headerToolbar>
+
     <columns>
         <Column>
             <Text text="Goal Number" />
@@ -235,14 +245,13 @@
                     </smartFilterBar:ControlConfiguration>
             </smartFilterBar:controlConfiguration>
         </smartFilterBar:SmartFilterBar>
-        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="SustainabilityGoalsSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
             <!-- layout data used to make the table growing but the filter bar fixed -->
             <Button 
                 text="{i18n>createNewOrder}" 
                 type="Accept" 
                 press=".onOpenDialog"
                 id="CreateOrderButton"
-				app:Werks="{Werks}" 
                 icon="sap-icon://add-equipment"
                 class="sapUiSmallMarginTop"/>
 				<!-- dont forget requestAtleastField -->

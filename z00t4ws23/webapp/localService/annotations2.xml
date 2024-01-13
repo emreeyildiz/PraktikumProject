@@ -1,0 +1,48 @@
+<Annotations Target="Z_00_T4_WS23_SRV.SustainabilityGoals" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <Annotation Term="com.sap.vocabularies.UI.v1.Chart">
+        <Record>
+            <PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column" />
+            <PropertyValue Property="Dimensions">
+                <Collection>
+                    <PropertyPath>Werks</PropertyPath>
+                    <PropertyPath>StartDate</PropertyPath>
+                    <PropertyPath>EndDate</PropertyPath>
+                    <!-- Add more dimensions here if needed -->
+                </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Measures">
+                <Collection>
+                    <PropertyPath>Value</PropertyPath>
+                    <!-- Add more measures here if needed -->
+                </Collection>
+            </PropertyValue>
+        </Record>
+    </Annotation>
+    <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+        <Collection>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Goalnr"/>
+                <Annotation Term="com.sap.vocabularies.UI.v1.Importance" EnumMember="com.sap.vocabularies.UI.v1.ImportanceType/High"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Werks"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="StartDate"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="EndDate"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Metric"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Description"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="Value"/>
+            </Record>
+<!-- Add more DataField records as needed for other properties -->
+        </Collection>
+    </Annotation>
+</Annotations>
