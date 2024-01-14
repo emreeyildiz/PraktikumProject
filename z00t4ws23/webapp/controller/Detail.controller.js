@@ -131,6 +131,11 @@ sap.ui.define([
             var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "MMM dd, yyyy" });
             return oDateFormat.format(new Date(sDate));
         },
+        formatInt: function (value) {
+            if (!value) return "";
+            
+            return parseFloat(value).toFixed(2);
+        },
         mapOrdersToChartPoints: function (oData) {
             var aChartPoints = [];
             var firstDate, lastDate;

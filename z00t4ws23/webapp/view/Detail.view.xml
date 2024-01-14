@@ -126,7 +126,7 @@
         <ColumnListItem>
             <cells>
                 <ObjectIdentifier title="{orders>Ordernr}" />
-                <Text text="{orders>EnergyConsm}" />
+                <Text text="{path: 'orders>EnergyConsm', formatter: '.formatInt'}" />
                 <Text text="{path: 'orders>StartDate', formatter: '.formatDate' }" />
                 <Text text="{path: 'orders>EndDate', formatter: '.formatDate' }" />
             </cells>
