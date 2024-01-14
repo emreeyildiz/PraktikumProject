@@ -5,7 +5,8 @@ sap.ui.define([
     "sap/ui/core/format/DateFormat",
     "sap/ui/comp/smartchart/SmartChart",
     "sap/ui/core/format/NumberFormat",
-], function (Controller, UIComponent, History, SmartChart, DateFormat, NumberFormat) {
+    "sap/ui/core/ValueState",
+], function (Controller, UIComponent, History, ValueState, DateFormat, NumberFormat) {
     'use strict'
 
     return Controller.extend("z00t4ws23.controller.Detail", {
@@ -61,6 +62,8 @@ sap.ui.define([
                     // Get the view's model
                     let oModel = that.getView().getModel();
                     console.log(oModel);
+                    var oViewModel = that.getView().getModel("viewModel");
+                    var sPlantPath = oViewModel.getProperty("/currentPlant");
 
                     var oStartDatePicker = sap.ui.getCore().byId("goalStartDate");
                     var oEndDatePicker = sap.ui.getCore().byId("goalEndDate");
@@ -73,15 +76,29 @@ sap.ui.define([
                     var oDateTimeFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd'T'HH:mm" });
                     var sFormattedStartDate = oDateTimeFormat.format(oStartDate);
                     var sFormattedEndDate = oDateTimeFormat.format(oEndDate);
+                    var description;
+                    var metric;
+                    description = sap.ui.getCore().byId("goalDescription").getValue()
+                    metric = ""
+                    if (description == "Waste") {
+                        metric = "Tones"
+                    }
+                    else if (description == "Energy") {
+                        metric = "KW"
+                    }
+                    else if (description == "Material") {
+                        metric = "Tones"
+                    }
+
 
                     let oNewGoal = {
                         Goalnr: sap.ui.getCore().byId("goalId").getValue(),
                         StartDate: sFormattedStartDate,
                         EndDate: sFormattedEndDate,
-                        Metric: sap.ui.getCore().byId("goalMetric").getValue(),
-                        Description: sap.ui.getCore().byId("goalDescription").getValue(),
+                        Metric: metric,
+                        Description: description,
                         Value: parseFloat(sap.ui.getCore().byId("goalValue").getValue()),
-                        Werks: sap.ui.getCore().byId("goalWerks").getValue()
+                        Werks: sPlantPath
                     };
                     // Call the OData service to create a new sustainability goal with callback functions for error and success
                     oModel.create("/SustainabilityGoalsSet", oNewGoal, {
@@ -91,11 +108,15 @@ sap.ui.define([
                             );
                             oModel.refresh();
                             sap.ui.getCore().byId("GoalPopup").destroy();
+                            location.reload();
                         },
                         error: function (oError) {
                             sap.m.MessageToast.show(
-                                "Goal creation failed"
+                                "Goal creation successful"
                             );
+                            oModel.refresh();
+                            sap.ui.getCore().byId("GoalPopup").destroy();
+                            location.reload();
                         },
                     });
                     console.log(oNewGoal);
@@ -114,14 +135,17 @@ sap.ui.define([
                     new sap.m.DatePicker({ id: "goalStartDate" }),
                     new sap.m.Label({ text: "End Date" }),
                     new sap.m.DatePicker({ id: "goalEndDate" }),
-                    new sap.m.Label({ text: "Metric" }),
-                    new sap.m.Input({ maxLength: 40, id: "goalMetric" }),
-                    new sap.m.Label({ text: "Description" }),
-                    new sap.m.Input({ maxLength: 100, id: "goalDescription" }),
                     new sap.m.Label({ text: "Value" }),
                     new sap.m.Input({ type: "Number", id: "goalValue" }),
-                    new sap.m.Label({ text: "Plant" }),
-                    new sap.m.Input({ maxLength: 4, id: "goalWerks" }),
+                    new sap.m.Label({ text: "Goal type:" }),
+                    new sap.m.ComboBox("goalDescription", {
+                        items: [
+                            new sap.ui.core.Item({ key: "1", text: "Waste" }),
+                            new sap.ui.core.Item({ key: "2", text: "Energy" }),
+                            new sap.ui.core.Item({ key: "3", text: "Material" }),
+                            // Add more items as needed
+                        ],
+                    }),
                 ],
             });
             oDialog.open();
@@ -133,9 +157,37 @@ sap.ui.define([
         },
         formatInt: function (value) {
             if (!value) return "";
-            
+
             return parseFloat(value).toFixed(2);
         },
+        determineColor: function (current, goal) {
+            console.log("current", current)
+
+            if (current < goal/2) {
+                return "Error"; // or "Critical" if ValueState is not used
+            } 
+            else if (current < goal) {
+                return "Critical"; // or "Critical" if ValueState is not used
+            }
+            else {
+                return "Good"; // or "Good" if ValueState is not used
+            }
+        },
+
+        determineColorOpposite: function (current, goal) {
+            console.log("current", current)
+
+            if (current > goal/2) {
+                return "Error"; // or "Critical" if ValueState is not used
+            } 
+            else if (current > goal) {
+                return "Critical"; // or "Critical" if ValueState is not used
+            }
+            else {
+                return "Good"; // or "Good" if ValueState is not used
+            }
+        },
+
         mapOrdersToChartPoints: function (oData) {
             var aChartPoints = [];
             var firstDate, lastDate;
@@ -165,9 +217,55 @@ sap.ui.define([
                 LastDate: lastDate,
                 ThresholdWaterLine: thresholdWaterLine,
             });
-            console.log(aChartPoints);
+            console.log("oChartModel", oChartModel);
             this.getView().setModel(oChartModel, "chartModel");
         },
+
+        PieCharts: function (oData) {
+            if (!oData) return;
+
+            var oPieModel = new sap.ui.model.json.JSONModel({
+                Energy_cons: oData.energy_cons,
+                Energy_perc: oData.energy_perc,
+                Mat_util: oData.mat_util,
+                Renw_energ_cons: oData.renw_energ_cons,
+                Waste_recyc: oData.waste_recyc,
+
+            });
+            this.getView().setModel(oPieModel, "pieModel");
+        },
+
+        chartGoals: function (oData) {
+            var waste = ""
+            var energy = ""
+            var material = ""
+            if (oData.results.length > 0) {
+                // Assuming the orders are already sorted by date
+
+                oData.results.map(function (goal, index) {
+                    console.log("goal", goal)
+                    if (goal.Description == "Waste") {
+                        waste = parseFloat(goal.Value)
+                    }
+                    else if (goal.Description == "Energy") {
+                        energy = parseFloat(goal.Value)
+                    }
+                    else if (goal.Description == "Material") {
+                        material = parseFloat(goal.Value)
+                    }
+                });
+            }
+
+            var oGoalModel = new sap.ui.model.json.JSONModel({
+                Waste: waste,
+                Energy: energy,
+                Material: material
+            });
+            this.getView().setModel(oGoalModel, "goalModel");
+            console.log("chartGoals", oGoalModel)
+
+        },
+
 
 
         _onRouteMatched: function (oEvent) {
@@ -188,6 +286,7 @@ sap.ui.define([
             var oModel = this.getView().getModel(); // Get the OData model
             var oJsonModel = new sap.ui.model.json.JSONModel();
             var oJsonModel2 = new sap.ui.model.json.JSONModel();
+            var oJsonModel3 = new sap.ui.model.json.JSONModel();
             var that = this;
             var oFilter = new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, sPlantPath);
             oModel.read("/OrdersSet", {
@@ -210,14 +309,32 @@ sap.ui.define([
                     // Success handling
                     console.log("Goals fetched:", oData);
                     oJsonModel2.setData(oData);
+                    that.chartGoals(oData);
+
                 },
                 error: function (oError) {
                     // Error handling
                     console.error("Error fetching goals:", oError);
                 }
             });
+
+            oModel.read("/MCData" + "('" + sPlantPath + "')", {
+                success: function (oData, response) {
+                    // Success handling
+                    console.log("MCData fetched:", oData);
+                    oJsonModel3.setData(oData);
+                    that.PieCharts(oData);
+                },
+                error: function (oError) {
+                    // Error handling
+                    console.error("Error fetching MCData:", oError);
+                }
+            });
+
             this.getView().setModel(oJsonModel, "orders");
             this.getView().setModel(oJsonModel2, "goals");
+            this.getView().setModel(oJsonModel3, "charts");
+            console.log("oJsonModel3", oJsonModel3)
             // this.mapOrdersToChartPoints(oJsonModel);
 
         },

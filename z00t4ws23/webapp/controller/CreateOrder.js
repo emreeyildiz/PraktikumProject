@@ -60,6 +60,7 @@ sap.ui.define([
                             success: function () {
                                 // MessageToast.show("Order created successfully");
                                 console.log("Success")
+                                location.reload();
                             },
                             error: function (oError) {
                                 // MessageToast.show("Error creating order");

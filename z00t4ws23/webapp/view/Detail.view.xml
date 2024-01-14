@@ -33,10 +33,7 @@
                 </HBox>
             </VBox>
         </HBox>
-	
-		
-
-            <Toolbar width="100%" height="10px"/>
+        <Toolbar width="100%" height="10px"/>
         <Panel headerText="Sustainability Goals">
 		<Text text="{results>ordernr}"></Text>
 		<Table>
@@ -45,7 +42,10 @@
 					<Text text="Goal" />
 				</Column>
 				<Column demandPopin="true" minScreenWidth="Tablet">
-					<Text text="Value(s)" />
+					<Text text="Current Percentage" />
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Goal Percentage" />
 				</Column>
 				<Column demandPopin="true" minScreenWidth="Tablet">
 					<Text text="Achievement" />
@@ -55,11 +55,20 @@
                 <ColumnListItem>
 					<cells>
 						<Text text="Renewable Energy Consumption" />
-						<Text text="63.5" />
+						<Text text="{pieModel>/Energy_perc} %" />
+						<Text text="{goalModel>/Energy} %" />
 						<FlexBox height="70px" width="170px" renderType="Bare">
-							<mc:HarveyBallMicroChart size="Responsive" total="93" totalScale="kW" showTotal="true" showFractions="true" press="press">
+							<mc:HarveyBallMicroChart size="Responsive" total="{pieModel>/Energy_cons}" totalScale="kW" showTotal="true" showFractions="true" press="press">
 								<mc:items>
-									<mc:HarveyBallMicroChartItem fraction="63.5" color="Good" fractionScale="kW" />
+									<mc:HarveyBallMicroChartItem fraction="{pieModel>/Renw_energ_cons}" 
+									color="{
+										parts: [
+											{path: 'pieModel>/Energy_perc'},
+											{path: 'goalModel>/Energy'}
+										],
+										formatter: '.determineColor'
+									}"
+									fractionScale="kW" />
 								</mc:items>
 							</mc:HarveyBallMicroChart>
 						</FlexBox>
@@ -68,52 +77,69 @@
 				<ColumnListItem>
 					<cells>
 						<Text text="Recycled Material Utilization" />
-						<Text text="45 %" />
+						<Text text="{pieModel>/Mat_util} %" />
+						<Text text="{goalModel>/Material} %" />
+
 						<FlexBox height="70px" width="70px" renderType="Bare">
 							<layoutData>
 								<FlexItemData maxHeight="70px" />
 							</layoutData>
-							<mc:RadialMicroChart size="Responsive" valueColor="Critical" percentage="45" press="press" />
+							<mc:RadialMicroChart size="Responsive" 
+								valueColor="{
+									parts: [
+										{path: 'pieModel>/Mat_util'},
+										{path: 'goalModel>/Material'}
+									],
+									formatter: '.determineColor'
+								}"
+							 percentage="{pieModel>/Mat_util}" press="press" />
 						</FlexBox>
 					</cells>
 				</ColumnListItem>
                 <ColumnListItem>
 					<cells>
 						<Text text="Waste Recycling" />
-						<Text text="83 %" />
+						<Text text="{pieModel>/Waste_recyc} %" />
+						<Text text="{goalModel>/Waste} %" />
 						<FlexBox height="70px" width="70px" renderType="Bare">
 							<layoutData>
 								<FlexItemData maxHeight="70px" />
 							</layoutData>
-							<mc:RadialMicroChart size="Responsive" valueColor="Good" percentage="83" press="press" />
+							<mc:RadialMicroChart size="Responsive"
+							valueColor="{
+									parts: [
+										{path: 'pieModel>/Waste_recyc'},
+										{path: 'goalModel>/Waste'}
+									],
+									formatter: '.determineColor'
+								}"
+							percentage="{pieModel>/Waste_recyc}" press="press" />
 						</FlexBox>
 					</cells>
 				</ColumnListItem>
 
 			</items>
 		</Table>
-		<Table id="goalsTable" items="{orders>/results}">
+		<Table id="goalsTable" items="{goals>/results}">
     <headerToolbar>
         <Toolbar>
-            <Title text="Sustainability orders" />
-							<Button 
+            <Title text="Sustainability Goals" />
+				<Button 
 				text="{i18n>createNewGoal}" 
 				type="Accept" 
 				press="createNewGoal"
 				id="createNewGoal"
 				app:Werks="{Werks}" 
 				icon="sap-icon://add-equipment"
-				class="sapUiSmallMarginTop"/>
+				class="sapUiSmallMarginTop"/>	
         </Toolbar>
-
     </headerToolbar>
-
     <columns>
         <Column>
-            <Text text="Order Number" />
+            <Text text="Goal Number" />
         </Column>
 		<Column>
-            <Text text="EnergyConsm" />
+            <Text text="Goal" />
         </Column>
         <Column>
             <Text text="Start Date" />
@@ -121,14 +147,26 @@
         <Column>
             <Text text="End Date" />
         </Column>
+		<Column>
+            <Text text="Type" />
+        </Column>
+		<Column>
+            <Text text="Metric" />
+        </Column>
+		<Column>
+            <Text text="Werks" />
+        </Column>
     </columns>
     <items>
         <ColumnListItem>
             <cells>
-                <ObjectIdentifier title="{orders>Ordernr}" />
-                <Text text="{path: 'orders>EnergyConsm', formatter: '.formatInt'}" />
-                <Text text="{path: 'orders>StartDate', formatter: '.formatDate' }" />
-                <Text text="{path: 'orders>EndDate', formatter: '.formatDate' }" />
+                <ObjectIdentifier title="{goals>Goalnr}" />
+                <Text text="{path: 'goals>Value', formatter: '.formatInt'} %" />
+                <Text text="{path: 'goals>StartDate', formatter: '.formatDate' }" />
+                <Text text="{path: 'goals>EndDate', formatter: '.formatDate' }" />
+                <Text text="{path: 'goals>Description'}" />
+                <Text text="{path: 'goals>Metric'}" />
+                <Text text="{path: 'goals>Werks'}" />
             </cells>
         </ColumnListItem>
     </items>
@@ -142,7 +180,7 @@
 					<Text text="Data" />
 				</Column>
 				<Column demandPopin="true" minScreenWidth="Tablet">
-					<Text text="Value(s)" />
+					<Text text="Current Percentage" />
 				</Column>
 				<Column demandPopin="true" minScreenWidth="Tablet">
 					<Text text="Graph" />
@@ -234,37 +272,16 @@
                     </smartFilterBar:ControlConfiguration>
             </smartFilterBar:controlConfiguration>
         </smartFilterBar:SmartFilterBar>
-        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="SustainabilityGoalsSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
             <!-- layout data used to make the table growing but the filter bar fixed -->
-            <Button 
+				<Button 
                 text="{i18n>createNewOrder}" 
                 type="Accept" 
                 press=".onOpenDialog"
                 id="CreateOrderButton"
                 icon="sap-icon://add-equipment"
                 class="sapUiSmallMarginTop"/>
-				<!-- dont forget requestAtleastField -->
-			<!-- <Table sticky="ColumnHeaders,HeaderToolbar">
-				<columns>
-					<Column>
-						<Label text="Product ID-Name"/>
-					</Column>
-				</columns>
-				<items>
-					<ColumnListItem>
-						<cells>
-						<ObjectIdentifier text="{
-							parts: ['StartDate', 'EndDate'],
-							formatter: 'formatter.formatDateRange'
-						}" />
-					</cells>
-					</ColumnListItem>
-				</items>
-   			</Table> -->
         </smartTable:SmartTable>
-            <!-- <smartchart:SmartChart enableAutoBinding="true"
-                entitySet="orders>/results">
-		    </smartchart:SmartChart> -->
             <smartchart:SmartChart id ="smartChartGeneral" enableAutoBinding="true"
             headerLevel="Auto"
             beforeRebindChart="onBeforeRebindTable"
