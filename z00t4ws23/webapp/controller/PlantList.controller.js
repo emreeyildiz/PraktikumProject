@@ -11,7 +11,7 @@ sap.ui.define([
 
         onInit: function () {
             var oViewModel = new JSONModel({
-                currency: "EUR"
+                
             });
             this.getView().setModel(oViewModel, "view");
         },
@@ -20,26 +20,24 @@ sap.ui.define([
 
             // build filter array
             var aFilter = [];
-            console.log(oEvent)
+            
             var sQuery = oEvent.getParameter("newValue");
             if (oEvent.getParameter("query")) {
                 sQuery = oEvent.getParameter("query")
             }
-            console.log(sQuery)
             if (sQuery) {
-                aFilter.push(new Filter("Name1", FilterOperator.Contains, sQuery));
+                aFilter.push(new Filter("Werks", FilterOperator.Contains, sQuery));
             }
-            console.log(aFilter);
+
             // filter binding
             var oList = this.byId("PlantList");
             var oBinding = oList.getBinding("items");
-            console.log(oList)
-            console.log(oBinding)
             console.log(oBinding.filter(aFilter));
+
+            oBinding.filter(aFilter);
         },
 
         onPress: function (oEvent) {
-
             var oItem = oEvent.getSource();
 
             console.log("oItem", oItem);
