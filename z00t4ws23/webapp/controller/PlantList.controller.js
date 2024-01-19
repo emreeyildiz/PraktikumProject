@@ -17,7 +17,6 @@ sap.ui.define([
         },
 
         onFilterPlants: function (oEvent) {
-
             // build filter array
             var aFilter = [];
             
@@ -39,19 +38,31 @@ sap.ui.define([
 
         onPress: function (oEvent) {
             var oItem = oEvent.getSource();
-
             console.log("oItem", oItem);
+            
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            console.log("oItem1:", oItem.getProperty("number").substr(1));
+            console.log("number: ", oItem.getProperty("number"));
+            console.log("numberUnit: ", oItem.getProperty("numberUnit"));
             // console.log("oItem: ", oItem.getBindingContext("Plant"));
             oRouter.navTo("detail",
                 {
-                    plantPath: window.encodeURIComponent(oItem.getProperty("number"))
+                    plantPath: window.encodeURIComponent(oItem.getProperty("numberUnit"))
                 }
             );
             console.log("refesh time")
             location.reload();
+        
+        },
 
+        formatWerks: function(sWerks) {
+            var oView = this.byId("plantListItemId");
+           
+            this.byId("plantListItemId").addStyleClass("werksPlantListText");
+            return sWerks;
+        },
+
+        formatName1: function(sName1) {
+            return sName1;
         }
     });
 });

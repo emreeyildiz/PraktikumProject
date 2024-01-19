@@ -63,3 +63,15 @@
 .myHBox {
   justify-content: space-between;
 }
+
+.customMarginBottom {
+  margin-bottom: 2rem; 
+}
+
+.werksPlantListText {
+  font-size: 5px !important;
+}
+
+.name1PlantListText {
+  font-size: 12px !important;
+}

@@ -1,11 +1,12 @@
 <mvc:View
 controllerName="z00t4ws23.controller.PlantList"
 xmlns="sap.m"
+xmlns:l="sap.ui.layout"
 xmlns:mvc="sap.ui.core.mvc">
     <List 
         id="PlantList"
         headerText="{i18n>PlantListTitle}"
-        class="sapUiResponsiveMargin"
+        class="sapUiResponsiveMargin customMarginBottom"
         width="auto"
         items="{
             path: '/PlantCCSet',
@@ -14,11 +15,14 @@ xmlns:mvc="sap.ui.core.mvc">
                 group: true
             }
         }"
+        
         >
         <headerToolbar>
             <Toolbar >
                 <Title text="{i18n>PlantListTableTitle}"/>
+
                 <ToolbarSpacer></ToolbarSpacer>
+                
                 <SearchField
                     width="50%"
                     search="onFilterPlants"
@@ -26,30 +30,48 @@ xmlns:mvc="sap.ui.core.mvc">
                     tooltip="{i18n>PlantListFilterTooltip}"
                     placeholder="{i18n>PlantListFilterPlaceholder}"
                 />
+
                 <Button
                     icon="sap-icon://filter"
                     type="Transparent"
                     tooltip="{i18n>PlantListFilterTooltip}"
                     press="onOpenFilterDialog"
                 />
+
             </Toolbar>
         </headerToolbar>
+
+        <!-- put number="Werks" if does not look nice-->
         <items>
             <ObjectListItem
-                title="{Name1}"
-                number="{Werks}"
+                id="plantListItemId"
+                title="{
+                    path: 'Name1',
+                    formatter: '.formatName1'
+                }"
+                number=" "
+                numberUnit="{Werks}"
                 type="Navigation"
                 press="onPress"
             >
-            <firstStatus>
-                <ObjectStatus text="{
-                    path: 'Type',
-                    formatter: '.formatter.statusText'
-                }"/>
-            </firstStatus>
+                <!-- <firstStatus>
+                    <ObjectStatus
+                        text="{Status}"
+                        state="{
+                            path: 'Status',
+                            formatter: 'sap.m.sample.ObjectListItemMarkLocked.Formatter.status'
+                        }" />
+			    </firstStatus> -->
+
+                <!-- object attribute can be added to show more info about the plant-->
+                <ObjectAttribute 
+
+                ></ObjectAttribute>
             </ObjectListItem>
+
         </items>
     </List>
-
+    
+    <VBox height="2rem" class="customMarginBottom"></VBox>
         
 </mvc:View>
