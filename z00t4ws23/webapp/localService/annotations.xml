@@ -13,8 +13,8 @@
             </PropertyValue>
             <PropertyValue Property="Measures">
                 <Collection>
-                    <PropertyPath>EnergyConsm</PropertyPath>
                     <PropertyPath>WaterConsm</PropertyPath>
+                    <PropertyPath>EnergyConsm</PropertyPath>
                     <PropertyPath>CarbonEmssn</PropertyPath> 
                     <PropertyPath>RnwEnergyConsm</PropertyPath> 
 

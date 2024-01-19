@@ -1,51 +1,50 @@
 <mvc:View controllerName="z00t4ws23.controller.Main"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
     xmlns:columnmenu="sap.m.table.columnmenu"
+	xmlns:core="sap.ui.core"
     xmlns:smartchart="sap.ui.comp.smartchart"
     xmlns:smarttable="sap.ui.comp.smarttable">
-    <Page id="page" title="{i18n>title}">
+<Page title="{i18n>title}">
         <content>
-        <!-- <Text text="{Id}" class="oddCell" />
-        <Text text="{Description}" />
-        <Text text="{Name}" /> -->
-            <!-- <Table items="{/OrdersSet}" growing="true"  class="myTable" growingScrollToLoad="true" id="idMachineSetTable2">
-            <columns>
-                <Column id="_IDGenColumn1">
-                    <Text id="_IDGenText1" text="{i18n>machineId}" />
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem id="columnListItem">
-                    <cells>
-                        <Text id="textId" text="{Werks}" class="oddCell" />
-                    </cells>
-                </ColumnListItem>
-            </items>
+            <VBox >
+                
+                <mvc:XMLView viewName="z00t4ws23.view.PlantList" />
 
-        </Table> -->
-            <mvc:XMLView viewName="z00t4ws23.view.PlantList" />
-            <smartchart:SmartChart enableAutoBinding="true"
-                header="General View"
-                entitySet="OrdersSet">
-		    </smartchart:SmartChart>
-            <smarttable:SmartTable
-                header="Orders"
-                entitySet="OrdersSet"
-                enableAutoBinding="true"
-                showRowCount="true"
-                tableType="ResponsiveTable"
-                editable="false"
-            >
-            </smarttable:SmartTable>
+                <smarttable:SmartTable
+                    header="Orders"
+                    entitySet="OrdersSet"
+                    enableAutoBinding="true"
+                    showRowCount="true"
+                    tableType="Table"
+                    editable="false"
+                    useVariantManagement="true" 
+                    useTablePersonalisation="true"
+                    persistencyKey="SmartTableAnalytical_Explored" 
+                    class="sapUiResponsiveContentPadding" 
+                    enableAutoColumnWidth="true" 
+                    editTogglable="true"
+                    >
+                    
+                    <!-- Additional content here -->
+                </smarttable:SmartTable>
 
+                <smartchart:SmartChart id="smartChartGeneral" enableAutoBinding="true"
+                    headerLevel="Auto"
+                    entitySet="OrdersSet" useVariantManagement="true"
+                    persistencyKey="PKeyChartExample9" useChartPersonalisation="true"
+                    header="All Metrics" showFullScreenButton="true" selectionMode="Multi"
+                    showChartTooltip="true" showDrillBreadcrumbs="true"
+                    showDetailsButton="true" showDrillButtons="true"
+                    uiStateChange="onUiStateChange">
+                    <!-- Toolbar content here -->
+                </smartchart:SmartChart>
 
-            <!-- <smartTable:SmartTable id="smartTreeTable"
-			entitySet="OrdersSet" tableType="TreeTable" useVariantManagement="false" useTablePersonalisation="true" header="Hierarchy"
-			showRowCount="false" enableAutoBinding="true" beforeRebindTable="onBeforeRebindTable" beforeExport="onBeforeExport"
-			initiallyVisibleFields="HIERARCHY_NODE,DESCRIPTION,LEVEL,DRILLDOWN_STATE,MAGNITUDE" enableAutoColumnWidth="true">
+                <!-- Add more content here as needed -->
 
-		    </smartTable:SmartTable> -->
-    </content>
+            </VBox>
+        </content>
     </Page>
+
 </mvc:View>
