@@ -124,32 +124,187 @@ sap.ui.define([
             });
 
             let oDialog = new sap.m.Dialog("GoalPopup", {
-                title: "Create New Sustainability Goal",
+                title: "Create New Goal for Plant " + this.getView().getModel("viewModel").getProperty("/currentPlant"),
                 modal: true,
-                contentWidth: "1em",
+                contentWidth: "25em", // Adjust width as necessary
                 buttons: [saveButton, cancelButton],
                 content: [
-                    new sap.m.Label({ text: "Goal ID" }),
-                    new sap.m.Input({ maxLength: 40, id: "goalId" }),
-                    new sap.m.Label({ text: "Start Date" }),
-                    new sap.m.DatePicker({ id: "goalStartDate" }),
-                    new sap.m.Label({ text: "End Date" }),
-                    new sap.m.DatePicker({ id: "goalEndDate" }),
-                    new sap.m.Label({ text: "Value" }),
-                    new sap.m.Input({ type: "Number", id: "goalValue" }),
-                    new sap.m.Label({ text: "Goal type:" }),
-                    new sap.m.ComboBox("goalDescription", {
+                    new sap.m.VBox({
                         items: [
-                            new sap.ui.core.Item({ key: "1", text: "Waste" }),
-                            new sap.ui.core.Item({ key: "2", text: "Energy" }),
-                            new sap.ui.core.Item({ key: "3", text: "Material" }),
-                            // Add more items as needed
-                        ],
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Goal ID" })], justifyContent: "Start" }),
+                            new sap.m.Input({ maxLength: 40, id: "goalId", width: "100%" })
+                        ]
                     }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Start Date" })], justifyContent: "Start" }),
+                            new sap.m.DatePicker({ id: "goalStartDate", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "End Date" })], justifyContent: "Start" }),
+                            new sap.m.DatePicker({ id: "goalEndDate", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Value Percentage" })], justifyContent: "Start" }),
+                            new sap.m.Input({ type: "Number", id: "goalValue", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Goal type:" })], justifyContent: "Start" }),
+                            new sap.m.ComboBox("goalDescription", {
+                                width: "100%",
+                                items: [
+                                    new sap.ui.core.Item({ key: "1", text: "Waste" }),
+                                    new sap.ui.core.Item({ key: "2", text: "Energy" }),
+                                    new sap.ui.core.Item({ key: "3", text: "Material" }),
+                                    // Add more items as needed
+                                ]
+                            })
+                        ]
+                    })
                 ],
-            });
+                layoutData: new sap.m.FlexItemData({ growFactor: 1 })
+            }).addStyleClass("sapUiContentPadding");
+
             oDialog.open();
+
         },
+
+        createNewOrder: function (oEvent) {
+
+            console.log("createNewOrder");
+            var sButtonId = oEvent.getSource().getId();
+            console.log(sButtonId);
+            let that = this;
+            let cancelButton = new sap.m.Button({
+                text: "Cancel",
+                type: sap.m.ButtonType.Reject,
+                press: function () {
+                    sap.ui.getCore().byId("OrderPopup").destroy();
+                }
+            });
+
+            let saveButton = new sap.m.Button({
+                text: "Save",
+                type: sap.m.ButtonType.Accept,
+                press: function () {
+                    // Get the view's model
+                    let oModel = that.getView().getModel();
+                    console.log(oModel);
+                    var oViewModel = that.getView().getModel("viewModel");
+
+                    var werks = oViewModel.getProperty("/currentPlant");;
+                    var oStartDatePicker = sap.ui.getCore().byId("startDatePicker");
+                    var oEndDatePicker = sap.ui.getCore().byId("endDatePicker");
+
+                    // Get the JavaScript Date objects from the DatePicker
+                    var oStartDate = oStartDatePicker.getDateValue();
+                    var oEndDate = oEndDatePicker.getDateValue();
+                    var orderId = sap.ui.getCore().byId("orderIdInput").getValue();
+                    var enrgCons = sap.ui.getCore().byId("enrgConsInput").getValue();
+                    var rnwEnrgCons = sap.ui.getCore().byId("rnwEnrgConsInput").getValue();
+                    var waterCons = sap.ui.getCore().byId("waterConsInput").getValue();
+                    var carbonFp = sap.ui.getCore().byId("carbonFpInput").getValue();
+                    var oDateTimeFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd'T'HH:mm" });
+                    var sFormattedStartDate = oDateTimeFormat.format(oStartDate);
+                    var sFormattedEndDate = oDateTimeFormat.format(oEndDate);
+
+                    let oNewOrder = {
+                        Ordernr: orderId,
+                        Werks: werks,
+                        StartDate: sFormattedStartDate,
+                        EndDate: sFormattedEndDate,
+                        EnergyConsm: parseFloat(enrgCons),
+                        RnwEnergyConsm: parseFloat(rnwEnrgCons),
+                        WaterConsm: parseFloat(waterCons),
+                        CarbonEmssn: parseFloat(carbonFp)
+                    };
+                    // Call the OData service to create a new sustainability goal with callback functions for error and success
+                    oModel.create("/OrdersSet", oNewOrder, {
+                        success: function (oData, oResponse) {
+                            sap.m.MessageToast.show(
+                                "Order creation successful"
+                            );
+                            oModel.refresh();
+                            sap.ui.getCore().byId("OrderPopup").destroy();
+                            location.reload();
+                        },
+                        error: function (oError) {
+                            sap.m.MessageToast.show(
+                                "Order creation successful"
+                            );
+                            oModel.refresh();
+                            sap.ui.getCore().byId("OrderPopup").destroy();
+                            location.reload();
+                        },
+                    });
+                    console.log(oNewOrder);
+                },
+            });
+
+            let oDialog = new sap.m.Dialog("OrderPopup", {
+                title: "Create New Order for Plant " + this.getView().getModel("viewModel").getProperty("/currentPlant"),
+                modal: true,
+                contentWidth: "25em", // Adjust width as necessary
+                buttons: [saveButton, cancelButton],
+                content: [
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Order ID" })], justifyContent: "Start" }),
+                            new sap.m.Input({ maxLength: 40, id: "orderIdInput", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Start Date" })], justifyContent: "Start" }),
+                            new sap.m.DatePicker({ id: "startDatePicker", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "End Date" })], justifyContent: "Start" }),
+                            new sap.m.DatePicker({ id: "endDatePicker", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Energy Consumption" })], justifyContent: "Start" }),
+                            new sap.m.Input({ type: "Number", id: "enrgConsInput", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Renewable Energy Consumption" })], justifyContent: "Start" }),
+                            new sap.m.Input({ type: "Number", id: "rnwEnrgConsInput", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Water Consumption" })], justifyContent: "Start" }),
+                            new sap.m.Input({ type: "Number", id: "waterConsInput", width: "100%" })
+                        ]
+                    }),
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Carbon Footprint" })], justifyContent: "Start" }),
+                            new sap.m.Input({ type: "Number", id: "carbonFpInput", width: "100%" })
+                        ]
+                    })
+                ],
+                layoutData: new sap.m.FlexItemData({ growFactor: 1 })
+            }).addStyleClass("sapUiContentPadding");
+
+            oDialog.open();
+
+
+        },
+
+
         formatDate: function (sDate) {
             if (!sDate) return "";
             var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "MMM dd, yyyy" });
@@ -163,9 +318,9 @@ sap.ui.define([
         determineColor: function (current, goal) {
             console.log("current", current)
 
-            if (current < goal/2) {
+            if (current < goal / 2) {
                 return "Error"; // or "Critical" if ValueState is not used
-            } 
+            }
             else if (current < goal) {
                 return "Critical"; // or "Critical" if ValueState is not used
             }
@@ -177,9 +332,9 @@ sap.ui.define([
         determineColorOpposite: function (current, goal) {
             console.log("current", current)
 
-            if (current > goal/2) {
+            if (current > goal / 2) {
                 return "Error"; // or "Critical" if ValueState is not used
-            } 
+            }
             else if (current > goal) {
                 return "Critical"; // or "Critical" if ValueState is not used
             }

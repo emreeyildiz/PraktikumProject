@@ -75,3 +75,8 @@
 .name1PlantListText {
   font-size: 12px !important;
 }
+
+.customDialogTitle {
+  background-color: #4CAF50; /* Example color */
+  color: white; /* Text color */
+}

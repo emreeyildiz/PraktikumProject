@@ -277,7 +277,7 @@
 				<Button 
                 text="{i18n>createNewOrder}" 
                 type="Accept" 
-                press=".onOpenDialog"
+                press="createNewOrder"
                 id="CreateOrderButton"
                 icon="sap-icon://add-equipment"
                 class="sapUiSmallMarginTop"/>
