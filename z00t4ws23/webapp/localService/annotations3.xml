@@ -1,4 +1,4 @@
-<Annotations Target="Z_00_T4_WS23_SRV.Orders" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotations Target="Z_00_T4_WS23_SRV.SCWerksData" xmlns="http://docs.oasis-open.org/odata/ns/edm">
     <Annotation Term="com.sap.vocabularies.UI.v1.Chart">
         <Record>
             <PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column" />
@@ -13,10 +13,10 @@
             </PropertyValue>
             <PropertyValue Property="Measures">
                 <Collection>
-                    <PropertyPath>RnwEnergyConsm</PropertyPath> 
-                    <PropertyPath>CarbonEmssn</PropertyPath> 
-                    <PropertyPath>EnergyConsm</PropertyPath>
                     <PropertyPath>WaterConsm</PropertyPath>
+                    <PropertyPath>EnergyConsm</PropertyPath>
+                    <PropertyPath>CarbonEmssn</PropertyPath> 
+                    <PropertyPath>RnwEnergyConsm</PropertyPath> 
 
                     <!-- Add more measures here if needed -->
                 </Collection>

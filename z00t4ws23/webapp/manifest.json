@@ -20,7 +20,7 @@
         "uri": "/sap/opu/odata/sap/Z_00_T4_WS23_SRV/",
         "type": "OData",
         "settings": {
-          "annotations": ["annotation1", "annotation2"],
+          "annotations": ["annotation1", "annotation2", "annotation3"],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
@@ -31,6 +31,10 @@
       },
       "annotation2": {
         "uri": "localService/annotations2.xml",
+        "type": "ODataAnnotation"
+      },
+      "annotation3": {
+        "uri": "localService/annotations3.xml",
         "type": "ODataAnnotation"
       }
     }

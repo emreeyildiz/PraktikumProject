@@ -226,6 +226,42 @@
 						</FlexBox>
 					</cells>
 				</ColumnListItem>
+								<ColumnListItem>
+					<cells>
+						<Text text="Energy Consumption" />
+						<Text text="{chartModel>/MeanEnergy} KW" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                rightTopLabel=""
+    							leftBottomLabel="{path: 'chartModel>/FirstDate', formatter: '.formatDate'}"
+    							rightBottomLabel="{path: 'chartModel>/LastDate', formatter: '.formatDate'}"
+								id="LineMicroChart3"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y2}" show="true" color="{chartModel>colorEnergy}"/>
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/thresholdWaterLine}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" color="Critical" />
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
                 <ColumnListItem>
 					<cells>
 						<Text text="Carbon Emission" />
@@ -262,42 +298,7 @@
 						</FlexBox>
 					</cells>
 				</ColumnListItem>
-				                <ColumnListItem>
-					<cells>
-						<Text text="Energy Consumption" />
-						<Text text="{chartModel>/MeanEnergy} KW" />
-						<FlexBox height="70px" width="170px" renderType="Bare">
-							<layoutData>
-								<FlexItemData maxHeight="70px" />
-							</layoutData>
-							<mc:LineMicroChart
-                                showPoints="true"
-                                size="Responsive"
-                                leftTopLabel=""
-                                rightTopLabel=""
-    							leftBottomLabel="{path: 'chartModel>/FirstDate', formatter: '.formatDate'}"
-    							rightBottomLabel="{path: 'chartModel>/LastDate', formatter: '.formatDate'}"
-								id="LineMicroChart3"
-                                press="press"
-                                class="sapUiTinyMarginTop">
-							<mc:lines>
-								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
-									<mc:points>
-										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y2}" show="true" color="{chartModel>colorEnergy}"/>
-									</mc:points>
-								</mc:LineMicroChartLine>
-							</mc:lines>
-							<mc:lines>
-								<mc:LineMicroChartLine points="{chartModel>/thresholdWaterLine}">
-									<mc:points>
-										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" color="Critical" />
-									</mc:points>
-								</mc:LineMicroChartLine>
-							</mc:lines>
-                        </mc:LineMicroChart>
-						</FlexBox>
-					</cells>
-				</ColumnListItem>
+
 				                <ColumnListItem>
 					<cells>
 						<Text text="Renewable Energy Consumption" />
@@ -352,7 +353,7 @@
             <smartchart:SmartChart id ="smartChartGeneral" enableAutoBinding="true"
             headerLevel="Auto"
             beforeRebindChart="onBeforeRebindTable"
-			entitySet="OrdersSet" useVariantManagement="true"
+			entitySet="SCWerksDataSet" useVariantManagement="true"
 			persistencyKey="PKeyChartExample9" useChartPersonalisation="true"
 			header="All Metrics" showFullScreenButton="true" selectionMode="Multi"
 			showChartTooltip="true" showDrillBreadcrumbs="true"
@@ -365,7 +366,6 @@
 				</OverflowToolbar>
 			</smartchart:toolbar>
 		</smartchart:SmartChart>
-
         </VBox>
             <core:HTML afterRendering="onAfterRendering" content="
                 &lt;canvas id='externalChart' width='400' height='400'&gt;&lt;/canvas&gt;

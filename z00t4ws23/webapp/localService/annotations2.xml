@@ -1,48 +1,53 @@
-<Annotations Target="Z_00_T4_WS23_SRV.SustainabilityGoals" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotations Target="Z_00_T4_WS23_SRV.SCData" xmlns="http://docs.oasis-open.org/odata/ns/edm">
     <Annotation Term="com.sap.vocabularies.UI.v1.Chart">
         <Record>
             <PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column" />
             <PropertyValue Property="Dimensions">
                 <Collection>
-                    <PropertyPath>Werks</PropertyPath>
-                    <PropertyPath>StartDate</PropertyPath>
                     <PropertyPath>EndDate</PropertyPath>
+                    <PropertyPath>StartDate</PropertyPath>
+
                     <!-- Add more dimensions here if needed -->
                 </Collection>
             </PropertyValue>
             <PropertyValue Property="Measures">
                 <Collection>
-                    <PropertyPath>Value</PropertyPath>
+                    <PropertyPath>WaterConsm</PropertyPath>
+                    <PropertyPath>EnergyConsm</PropertyPath>
+                    <PropertyPath>CarbonEmssn</PropertyPath> 
+                    <PropertyPath>RnwEnergyConsm</PropertyPath> 
+
                     <!-- Add more measures here if needed -->
                 </Collection>
             </PropertyValue>
         </Record>
     </Annotation>
-    <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+        <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
         <Collection>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="Goalnr"/>
+                <PropertyValue Property="Value" Path="Ordernr"/>
                 <Annotation Term="com.sap.vocabularies.UI.v1.Importance" EnumMember="com.sap.vocabularies.UI.v1.ImportanceType/High"/>
-            </Record>
-            <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="Werks"/>
-            </Record>
-            <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="StartDate"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
                 <PropertyValue Property="Value" Path="EndDate"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="Metric"/>
+                <PropertyValue Property="Value" Path="StartDate"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="Description"/>
+                <PropertyValue Property="Value" Path="EnergyConsm"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="Value"/>
+                <PropertyValue Property="Value" Path="WaterConsm"/>
             </Record>
-<!-- Add more DataField records as needed for other properties -->
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="CarbonEmssn"/>
+            </Record>
+            <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                <PropertyValue Property="Value" Path="RnwEnergyConsm"/>
+            </Record>
+            
+            <!-- Add more DataField records as needed for other properties -->
         </Collection>
     </Annotation>
 </Annotations>

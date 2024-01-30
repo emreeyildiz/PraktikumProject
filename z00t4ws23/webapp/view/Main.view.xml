@@ -31,7 +31,7 @@
                 <HBox height="2rem" ></HBox>
                 <smartchart:SmartChart id="smartChartGeneral" enableAutoBinding="true"
                     headerLevel="Auto"
-                    entitySet="OrdersSet" useVariantManagement="true"
+                    entitySet="SCDataSet" useVariantManagement="true"
                     persistencyKey="PKeyChartExample9" useChartPersonalisation="true"
                     header="All Metrics" showFullScreenButton="true" selectionMode="Multi"
                     showChartTooltip="true" showDrillBreadcrumbs="true"
