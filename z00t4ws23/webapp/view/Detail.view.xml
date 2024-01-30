@@ -80,9 +80,9 @@
 						<Text text="{pieModel>/Mat_util} %" />
 						<Text text="{goalModel>/Material} %" />
 
-						<FlexBox height="70px" width="70px" renderType="Bare">
+						<FlexBox height="100px" width="70px" renderType="Bare">
 							<layoutData>
-								<FlexItemData maxHeight="70px" />
+								<FlexItemData maxHeight="100px" />
 							</layoutData>
 							<mc:RadialMicroChart size="Responsive" 
 								valueColor="{
@@ -101,9 +101,9 @@
 						<Text text="Waste Recycling" />
 						<Text text="{pieModel>/Waste_recyc} %" />
 						<Text text="{goalModel>/Waste} %" />
-						<FlexBox height="70px" width="70px" renderType="Bare">
+						<FlexBox height="100px" width="70px" renderType="Bare">
 							<layoutData>
-								<FlexItemData maxHeight="70px" />
+								<FlexItemData maxHeight="100px" />
 							</layoutData>
 							<mc:RadialMicroChart size="Responsive"
 							valueColor="{
@@ -176,7 +176,7 @@
 </Table>
 </ScrollContainer>
 	</Panel>
-    <Panel headerText="Stats">
+    <Panel headerText="Statistics">
 		<Table>
 			<columns>
 				<Column demandPopin="true" minScreenWidth="Tablet">
@@ -194,9 +194,9 @@
 					<cells>
 						<Text text="Water Usage" />
 						<Text text="{chartModel>/MeanWater} Tons" />
-						<FlexBox height="70px" width="170px" renderType="Bare">
+						<FlexBox height="100px" width="170px" renderType="Bare">
 							<layoutData>
-								<FlexItemData maxHeight="70px" />
+								<FlexItemData maxHeight="100px" />
 							</layoutData>
 							<mc:LineMicroChart
                                 showPoints="true"
@@ -230,9 +230,9 @@
 					<cells>
 						<Text text="Energy Consumption" />
 						<Text text="{chartModel>/MeanEnergy} KW" />
-						<FlexBox height="70px" width="170px" renderType="Bare">
+						<FlexBox height="100px" width="170px" renderType="Bare">
 							<layoutData>
-								<FlexItemData maxHeight="70px" />
+								<FlexItemData maxHeight="100px" />
 							</layoutData>
 							<mc:LineMicroChart
                                 showPoints="true"
@@ -266,9 +266,9 @@
 					<cells>
 						<Text text="Carbon Emission" />
 						<Text text="{chartModel>/MeanCarbon} Tons" />
-						<FlexBox height="70px" width="170px" renderType="Bare">
+						<FlexBox height="100px" width="170px" renderType="Bare">
 							<layoutData>
-								<FlexItemData maxHeight="70px" />
+								<FlexItemData maxHeight="100px" />
 							</layoutData>
 							<mc:LineMicroChart
                                 showPoints="true"
@@ -304,9 +304,9 @@
 						<Text text="Renewable Energy Consumption" />
 						<Text text="{chartModel>/MeanRenewable} KW" />
 
-						<FlexBox height="70px" width="170px" renderType="Bare">
+						<FlexBox height="100px" width="170px" renderType="Bare">
 							<layoutData>
-								<FlexItemData maxHeight="70px" />
+								<FlexItemData maxHeight="100px" />
 							</layoutData>
 							<mc:LineMicroChart
                                 showPoints="true"

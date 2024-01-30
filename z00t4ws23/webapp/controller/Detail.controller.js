@@ -144,7 +144,7 @@ sap.ui.define([
                     }),
                     new sap.m.VBox({
                         items: [
-                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Goal type:" })], justifyContent: "Start" }),
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: " Goal Type:" })], justifyContent: "Start" }),
                             new sap.m.ComboBox("goalDescription", {
                                 width: "100%",
                                 items: [
@@ -330,9 +330,6 @@ sap.ui.define([
             var aChartPoints = [];
             var firstDate, lastDate;
             var thresholdWater = 23;
-            var thresholdEnergy = 23;
-            var thresholdCarbon = 23;
-            var thresholdRenewable = 23;
 
 
             oData.results.map(function (order, index) {
@@ -345,6 +342,7 @@ sap.ui.define([
             ];
             if (oData.results.length > 0) {
                 // Assuming the orders are already sorted by date
+                console.log("-----Odata-----", oData.results)
                 firstDate = oData.results[0].EndDate;
                 lastDate = oData.results[oData.results.length - 1].EndDate;
 
@@ -474,6 +472,19 @@ sap.ui.define([
             var that = this;
             var oFilter = new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, sPlantPath);
             oModel.read("/OrdersSet", {
+                filters: [oFilter],
+                success: function (oData, response) {
+                    // Success handling
+                    console.log("Orders fetched:", oData);
+                    oJsonModel.setData(oData);
+                },
+                error: function (oError) {
+                    // Error handling
+                    console.error("Error fetching orders:", oError);
+                }
+            });
+
+            oModel.read("/SCWerksDataSet", {
                 filters: [oFilter],
                 success: function (oData, response) {
                     // Success handling
