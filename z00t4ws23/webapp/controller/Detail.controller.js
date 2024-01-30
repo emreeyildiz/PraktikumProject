@@ -38,8 +38,11 @@ sap.ui.define([
                 var oFilter = new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, sPlantPath);
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 oBindingParams.filters.push(oFilter);
+
+
             }
         },
+
 
         createNewGoal: function (oEvent) {
 
@@ -69,31 +72,29 @@ sap.ui.define([
                     var oEndDatePicker = sap.ui.getCore().byId("goalEndDate");
 
                     // Get the JavaScript Date objects from the DatePicker
-                    var oStartDate = oStartDatePicker.getDateValue();
                     var oEndDate = oEndDatePicker.getDateValue();
 
                     // Use DateFormat to format the dates
                     var oDateTimeFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd'T'HH:mm" });
-                    var sFormattedStartDate = oDateTimeFormat.format(oStartDate);
                     var sFormattedEndDate = oDateTimeFormat.format(oEndDate);
                     var description;
                     var metric;
                     description = sap.ui.getCore().byId("goalDescription").getValue()
                     metric = ""
                     if (description == "Waste") {
-                        metric = "Tones"
+                        metric = "Tons"
                     }
                     else if (description == "Energy") {
                         metric = "KW"
                     }
                     else if (description == "Material") {
-                        metric = "Tones"
+                        metric = "Tons"
                     }
 
 
                     let oNewGoal = {
-                        Goalnr: sap.ui.getCore().byId("goalId").getValue(),
-                        StartDate: sFormattedStartDate,
+                        Goalnr: "1",
+                        StartDate: "2020-01-01T00:00:00",
                         EndDate: sFormattedEndDate,
                         Metric: metric,
                         Description: description,
@@ -131,26 +132,14 @@ sap.ui.define([
                 content: [
                     new sap.m.VBox({
                         items: [
-                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Goal ID" })], justifyContent: "Start" }),
-                            new sap.m.Input({ maxLength: 40, id: "goalId", width: "100%" })
-                        ]
-                    }),
-                    new sap.m.VBox({
-                        items: [
-                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Start Date" })], justifyContent: "Start" }),
-                            new sap.m.DatePicker({ id: "goalStartDate", width: "100%" })
-                        ]
-                    }),
-                    new sap.m.VBox({
-                        items: [
-                            new sap.m.HBox({ items: [new sap.m.Label({ text: "End Date" })], justifyContent: "Start" }),
+                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Deadline" })], justifyContent: "Start" }),
                             new sap.m.DatePicker({ id: "goalEndDate", width: "100%" })
                         ]
                     }),
                     new sap.m.VBox({
                         items: [
                             new sap.m.HBox({ items: [new sap.m.Label({ text: "Value Percentage" })], justifyContent: "Start" }),
-                            new sap.m.Input({ type: "Number", id: "goalValue", width: "100%" })
+                            new sap.m.Input({ type: "Number", id: "goalValue", width: "100%", placeholder: "Enter a value between 0 and 100" })
                         ]
                     }),
                     new sap.m.VBox({
@@ -205,7 +194,7 @@ sap.ui.define([
                     // Get the JavaScript Date objects from the DatePicker
                     var oStartDate = oStartDatePicker.getDateValue();
                     var oEndDate = oEndDatePicker.getDateValue();
-                    var orderId = sap.ui.getCore().byId("orderIdInput").getValue();
+                    var orderId = "1";
                     var enrgCons = sap.ui.getCore().byId("enrgConsInput").getValue();
                     var rnwEnrgCons = sap.ui.getCore().byId("rnwEnrgConsInput").getValue();
                     var waterCons = sap.ui.getCore().byId("waterConsInput").getValue();
@@ -253,12 +242,6 @@ sap.ui.define([
                 contentWidth: "25em", // Adjust width as necessary
                 buttons: [saveButton, cancelButton],
                 content: [
-                    new sap.m.VBox({
-                        items: [
-                            new sap.m.HBox({ items: [new sap.m.Label({ text: "Order ID" })], justifyContent: "Start" }),
-                            new sap.m.Input({ maxLength: 40, id: "orderIdInput", width: "100%" })
-                        ]
-                    }),
                     new sap.m.VBox({
                         items: [
                             new sap.m.HBox({ items: [new sap.m.Label({ text: "Start Date" })], justifyContent: "Start" }),
@@ -346,7 +329,16 @@ sap.ui.define([
         mapOrdersToChartPoints: function (oData) {
             var aChartPoints = [];
             var firstDate, lastDate;
-            var thresholdWater = 11;
+            var thresholdWater = 23;
+            var thresholdEnergy = 23;
+            var thresholdCarbon = 23;
+            var thresholdRenewable = 23;
+
+
+            oData.results.map(function (order, index) {
+
+            });
+
             var thresholdWaterLine = [
                 { x: 0, y: thresholdWater },
                 { x: oData.results.length - 1, y: thresholdWater } // Assuming x=100 is your max value
@@ -355,22 +347,53 @@ sap.ui.define([
                 // Assuming the orders are already sorted by date
                 firstDate = oData.results[0].EndDate;
                 lastDate = oData.results[oData.results.length - 1].EndDate;
+
+                // Calculate the mean values
+                var meanWater = oData.results.reduce(function (sum, order) {
+                    return sum + parseFloat(order.WaterConsm);
+                }, 0) / oData.results.length;
+
+                var meanCarbon = oData.results.reduce(function (sum, order) {
+                    return sum + parseFloat(order.CarbonEmssn);
+                }, 0) / oData.results.length;
+
+                var meanEnergy = oData.results.reduce(function (sum, order) {
+                    return sum + parseFloat(order.EnergyConsm);
+                }, 0) / oData.results.length;
+
+                var meanRenewable = oData.results.reduce(function (sum, order) {
+                    return sum + parseFloat(order.RnwEnergyConsm);
+                }, 0) / oData.results.length;
+
+
                 aChartPoints = oData.results.map(function (order, index) {
-                    var color = parseFloat(order.WaterConsm) > thresholdWater ? "Error" : "Good"; // Set color based on thresholdWater
+                    var colorWater = parseFloat(order.WaterConsm) > meanWater ? "Error" : "Good"; // Set color based on thresholdWater
+                    var colorEnergy = parseFloat(order.EnergyConsm) > meanEnergy ? "Error" : "Good"; // Set color based on thresholdWater
+                    var colorCarbon = parseFloat(order.CarbonEmssn) > meanCarbon ? "Error" : "Good"; // Set color based on thresholdWater
+                    var colorRenewable = parseFloat(order.RnwEnergyConsm) > meanRenewable ? "Error" : "Good"; // Set color based on thresholdWater
                     return {
                         x: index, // Transform this as needed
                         y: parseFloat(order.WaterConsm),
                         y1: parseFloat(order.CarbonEmssn),
-                        color: color,
+                        y2: parseFloat(order.EnergyConsm),
+                        y3: parseFloat(order.RnwEnergyConsm),
+
+                        colorWater: colorWater,
+                        colorEnergy: colorEnergy,
+                        colorCarbon: colorCarbon,
+                        colorRenewable: colorRenewable,
                     };
                 });
             }
-
             var oChartModel = new sap.ui.model.json.JSONModel({
                 ChartData: aChartPoints,
                 FirstDate: firstDate,
                 LastDate: lastDate,
                 ThresholdWaterLine: thresholdWaterLine,
+                MeanCarbon: Math.floor(meanCarbon),
+                MeanEnergy: Math.floor(meanEnergy),
+                MeanWater: Math.floor(meanWater),
+                MeanRenewable: Math.floor(meanRenewable),
             });
             console.log("oChartModel", oChartModel);
             this.getView().setModel(oChartModel, "chartModel");
@@ -384,28 +407,34 @@ sap.ui.define([
                 Energy_perc: oData.energy_perc,
                 Mat_util: oData.mat_util,
                 Renw_energ_cons: oData.renw_energ_cons,
+                Renw_energ_perc: oData.renw_energ_perc,
+
                 Waste_recyc: oData.waste_recyc,
+                Waste_util: oData.waste_util,
+                Water_cons: oData.water_cons,
+                Water_util: oData.water_util
+
 
             });
             this.getView().setModel(oPieModel, "pieModel");
         },
 
         chartGoals: function (oData) {
-            var waste = ""
-            var energy = ""
-            var material = ""
+            var waste = "-1"
+            var energy = "-1"
+            var material = "-1"
             if (oData.results.length > 0) {
                 // Assuming the orders are already sorted by date
 
                 oData.results.map(function (goal, index) {
                     console.log("goal", goal)
-                    if (goal.Description == "Waste") {
+                    if (goal.Description == "Waste" && waste == "-1") {
                         waste = parseFloat(goal.Value)
                     }
-                    else if (goal.Description == "Energy") {
+                    else if (goal.Description == "Energy" && energy == "-1") {
                         energy = parseFloat(goal.Value)
                     }
-                    else if (goal.Description == "Material") {
+                    else if (goal.Description == "Material" && material == "-1") {
                         material = parseFloat(goal.Value)
                     }
                 });
@@ -462,6 +491,10 @@ sap.ui.define([
                 filters: [oFilter],
                 success: function (oData, response) {
                     // Success handling
+                    console.log("Goals fetched:", oData);
+                    oData.results.sort(function (a, b) {
+                        return parseInt(b.Goalnr, 10) - parseInt(a.Goalnr, 10);
+                    });
                     console.log("Goals fetched:", oData);
                     oJsonModel2.setData(oData);
                     that.chartGoals(oData);

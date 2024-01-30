@@ -72,6 +72,5 @@ xmlns:mvc="sap.ui.core.mvc">
         </items>
     </List>
     
-    <VBox height="2rem" class="customMarginBottom"></VBox>
         
 </mvc:View>

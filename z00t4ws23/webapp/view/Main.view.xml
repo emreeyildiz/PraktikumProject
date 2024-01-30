@@ -11,7 +11,6 @@
             <VBox >
                 
                 <mvc:XMLView viewName="z00t4ws23.view.PlantList" />
-
                 <smarttable:SmartTable
                     header="Orders"
                     entitySet="OrdersSet"
@@ -29,7 +28,7 @@
                     
                     <!-- Additional content here -->
                 </smarttable:SmartTable>
-
+                <HBox height="2rem" ></HBox>
                 <smartchart:SmartChart id="smartChartGeneral" enableAutoBinding="true"
                     headerLevel="Auto"
                     entitySet="OrdersSet" useVariantManagement="true"

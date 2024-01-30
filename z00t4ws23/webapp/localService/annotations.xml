@@ -5,8 +5,8 @@
             <PropertyValue Property="Dimensions">
                 <Collection>
                     <PropertyPath>Werks</PropertyPath>
-                    <PropertyPath>StartDate</PropertyPath>
                     <PropertyPath>EndDate</PropertyPath>
+                    <PropertyPath>StartDate</PropertyPath>
 
                     <!-- Add more dimensions here if needed -->
                 </Collection>
@@ -33,10 +33,10 @@
                 <PropertyValue Property="Value" Path="Werks"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="StartDate"/>
+                <PropertyValue Property="Value" Path="EndDate"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                <PropertyValue Property="Value" Path="EndDate"/>
+                <PropertyValue Property="Value" Path="StartDate"/>
             </Record>
             <Record Type="com.sap.vocabularies.UI.v1.DataField">
                 <PropertyValue Property="Value" Path="EnergyConsm"/>

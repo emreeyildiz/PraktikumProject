@@ -54,7 +54,7 @@
 			<items>
                 <ColumnListItem>
 					<cells>
-						<Text text="Renewable Energy Consumption" />
+						<Text text="Renewable Energy Consumption"/>
 						<Text text="{pieModel>/Energy_perc} %" />
 						<Text text="{goalModel>/Energy} %" />
 						<FlexBox height="70px" width="170px" renderType="Bare">
@@ -120,7 +120,15 @@
 
 			</items>
 		</Table>
-		<Table id="goalsTable" items="{goals>/results}">
+		<ScrollContainer height='20rem' vertical='true'> 
+		<Table id="goalsTable" items="{goals>/results}"     
+			growing="true"
+			growingScrollToLoad="true"
+			growingThreshold="5"
+			inset="false" 
+			fixedLayout="Strict"
+			
+			mode="SingleSelectMaster">
     <headerToolbar>
         <Toolbar>
             <Title text="Sustainability Goals" />
@@ -130,8 +138,7 @@
 				press="createNewGoal"
 				id="createNewGoal"
 				app:Werks="{Werks}" 
-				icon="sap-icon://add-equipment"
-				class="sapUiSmallMarginTop"/>	
+				icon="sap-icon://add-equipment"/>	
         </Toolbar>
     </headerToolbar>
     <columns>
@@ -142,10 +149,7 @@
             <Text text="Goal" />
         </Column>
         <Column>
-            <Text text="Start Date" />
-        </Column>
-        <Column>
-            <Text text="End Date" />
+            <Text text="Deadline" />
         </Column>
 		<Column>
             <Text text="Type" />
@@ -162,7 +166,6 @@
             <cells>
                 <ObjectIdentifier title="{goals>Goalnr}" />
                 <Text text="{path: 'goals>Value', formatter: '.formatInt'} %" />
-                <Text text="{path: 'goals>StartDate', formatter: '.formatDate' }" />
                 <Text text="{path: 'goals>EndDate', formatter: '.formatDate' }" />
                 <Text text="{path: 'goals>Description'}" />
                 <Text text="{path: 'goals>Metric'}" />
@@ -171,7 +174,7 @@
         </ColumnListItem>
     </items>
 </Table>
-
+</ScrollContainer>
 	</Panel>
     <Panel headerText="Stats">
 		<Table>
@@ -180,7 +183,7 @@
 					<Text text="Data" />
 				</Column>
 				<Column demandPopin="true" minScreenWidth="Tablet">
-					<Text text="Current Percentage" />
+					<Text text="Avarage" />
 				</Column>
 				<Column demandPopin="true" minScreenWidth="Tablet">
 					<Text text="Graph" />
@@ -190,7 +193,7 @@
 				<ColumnListItem>
 					<cells>
 						<Text text="Water Usage" />
-						<Text text="Many" />
+						<Text text="{chartModel>/MeanWater} Tons" />
 						<FlexBox height="70px" width="170px" renderType="Bare">
 							<layoutData>
 								<FlexItemData maxHeight="70px" />
@@ -208,7 +211,7 @@
 							<mc:lines>
 								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
 									<mc:points>
-										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" show="true" color="{chartModel>color}"/>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" show="true" color="{chartModel>colorWater}"/>
 									</mc:points>
 								</mc:LineMicroChartLine>
 							</mc:lines>
@@ -226,7 +229,7 @@
                 <ColumnListItem>
 					<cells>
 						<Text text="Carbon Emission" />
-						<Text text="Many" />
+						<Text text="{chartModel>/MeanCarbon} Tons" />
 						<FlexBox height="70px" width="170px" renderType="Bare">
 							<layoutData>
 								<FlexItemData maxHeight="70px" />
@@ -244,7 +247,80 @@
 							<mc:lines>
 								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
 									<mc:points>
-										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y1}" show="true" color="{chartModel>color}"/>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y1}" show="true" color="{chartModel>colorCarbon}"/>
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/thresholdWaterLine}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" color="Critical" />
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+				                <ColumnListItem>
+					<cells>
+						<Text text="Energy Consumption" />
+						<Text text="{chartModel>/MeanEnergy} KW" />
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                rightTopLabel=""
+    							leftBottomLabel="{path: 'chartModel>/FirstDate', formatter: '.formatDate'}"
+    							rightBottomLabel="{path: 'chartModel>/LastDate', formatter: '.formatDate'}"
+								id="LineMicroChart3"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y2}" show="true" color="{chartModel>colorEnergy}"/>
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/thresholdWaterLine}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y}" color="Critical" />
+									</mc:points>
+								</mc:LineMicroChartLine>
+							</mc:lines>
+                        </mc:LineMicroChart>
+						</FlexBox>
+					</cells>
+				</ColumnListItem>
+				                <ColumnListItem>
+					<cells>
+						<Text text="Renewable Energy Consumption" />
+						<Text text="{chartModel>/MeanRenewable} KW" />
+
+						<FlexBox height="70px" width="170px" renderType="Bare">
+							<layoutData>
+								<FlexItemData maxHeight="70px" />
+							</layoutData>
+							<mc:LineMicroChart
+                                showPoints="true"
+                                size="Responsive"
+                                leftTopLabel=""
+                                rightTopLabel=""
+    							leftBottomLabel="{path: 'chartModel>/FirstDate', formatter: '.formatDate'}"
+    							rightBottomLabel="{path: 'chartModel>/LastDate', formatter: '.formatDate'}"
+								id="LineMicroChart4"
+                                press="press"
+                                class="sapUiTinyMarginTop">
+							<mc:lines>
+								<mc:LineMicroChartLine points="{chartModel>/ChartData}">
+									<mc:points>
+										<mc:LineMicroChartEmphasizedPoint x="{chartModel>x}" y="{chartModel>y3}" show="true" color="{chartModel>colorRenewable}"/>
 									</mc:points>
 								</mc:LineMicroChartLine>
 							</mc:lines>
@@ -262,17 +338,7 @@
 			</items>
 		</Table>
 	</Panel>
-        <smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="OrdersSet" persistencyKey="SmartFilter_Explored" basicSearchFieldName="Bukrs" enableBasicSearch="true" >
-            <smartFilterBar:controlConfiguration>
-                <smartFilterBar:ControlConfiguration key="{Werks}">
-                    <smartFilterBar:defaultFilterValues>
-                            <smartFilterBar:SelectOption low="{Werks}">
-                            </smartFilterBar:SelectOption>
-                        </smartFilterBar:defaultFilterValues>
-                    </smartFilterBar:ControlConfiguration>
-            </smartFilterBar:controlConfiguration>
-        </smartFilterBar:SmartFilterBar>
-        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet" beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="OrdersSet"  beforeRebindTable="onBeforeRebindTable" tableType="Table" useExportToExcel="true"  useVariantManagement="true" useTablePersonalisation="true" header="Orders" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
             <!-- layout data used to make the table growing but the filter bar fixed -->
 				<Button 
                 text="{i18n>createNewOrder}" 
@@ -282,6 +348,7 @@
                 icon="sap-icon://add-equipment"
                 class="sapUiSmallMarginTop"/>
         </smartTable:SmartTable>
+
             <smartchart:SmartChart id ="smartChartGeneral" enableAutoBinding="true"
             headerLevel="Auto"
             beforeRebindChart="onBeforeRebindTable"
